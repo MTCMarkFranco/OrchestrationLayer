@@ -33,25 +33,23 @@ async def processQuery(query):
     chatTurnResponse = None
    
     # Set up logging
-    logging.basicConfig(level=logging.WARN, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     # have the logger output to console
     logger = logging.getLogger()
-    console = logging.StreamHandler()
-    logger.addHandler(console)
      
     # Initialize the SemanticKernel
-    logger.warn("Initializing SemanticKernel")
+    logger.info("Initializing SemanticKernel")
     kernel = sk.Kernel()
    
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
     kernel.add_chat_service("GPT", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
            
-    logger.warn("Loading Semantic and Native Plugins...")
+    logger.info("Loading Semantic and Native Plugins...")
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
     # Define the plan
-    logger.warn("Generating the plan...")      
+    logger.info("Generating the plan...")      
     planner = SequentialPlanner(kernel=kernel)
     planDirective = """To interact with the Azure Search Library index, 
                     retrieve relevant documents based on the user's query,
@@ -64,16 +62,16 @@ async def processQuery(query):
     #     print(step.description, ":", step._state.__dict__)
     
     # Execute the plan Steps in Sequence
-    logger.warn("Executing the plan...")
+    logger.info("Executing the plan...")
     planContext = kernel.create_new_context(variables=ContextVariables(variables={"userinput": query}))
     assistantResponse = await sequential_plan.invoke(query, planContext)
 
     # Transform the result into a JSON object
-    logger.warn("Transmogrifying ( Shaping ) the result...")
+    logger.info("Transmogrifying ( Shaping ) the result...")
     data_dict = json.loads(assistantResponse.result)
     assistantAction = AssistantAction(**data_dict)
     chatTurnResponse = assistantAction.records
-    logger.warn("Chat Turn Complete! Returning the response...")
+    logger.info("Chat Turn Complete! Returning the response...")
       
     return chatTurnResponse   
  
