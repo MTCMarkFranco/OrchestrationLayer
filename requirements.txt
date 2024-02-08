@@ -1,5 +1,5 @@
 flask-rest
 azure-functions
 python-dotenv==1.0.0
-semantic-kernel==0.4.6.dev0
+semantic-kernel==0.5.0.dev0
 azure.search.documents

@@ -3,8 +3,8 @@ import json
 import logging
 from typing import List
 from attr import dataclass
-from semantic_kernel.plugin_definition import sk_function, sk_function_context_parameter
-from semantic_kernel.orchestration.sk_context import SKContext
+from semantic_kernel.plugin_definition import kernel_function,kernel_function_context_parameter
+from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
@@ -24,16 +24,16 @@ class QueryIndexPlugin:
                                    index_name=self.index_name,
                                    credential=self.credential)
 
-    @sk_function(
+    @kernel_function(
         description="This function interacts with the Azure Search Library index. It sends a query to the index, retrieves the relevant documents based on the query, and processes the results. The function is designed to work with Azure's search service, which allows for efficient search and retrieval of information stored in an Azure index.",
         name="get_library_query_results",
         input_description="The specific query for which the librarian requires additional information."
     )
-    @sk_function_context_parameter(
+    @kernel_function_context_parameter(
         name="output",
         description="A JSON object containing a list of documents referenced in the library index that match the query, along with a summary of each document. The JSON object is structured as follows: {\"records\": [{\"publisheddate\": \"2021-01-01\", \"filename\": \"document1.txt\", \"summary\": \"This is a summary of document1.txt\"}, {\"publisheddate\": \"2021-01-02\", \"filename\": \"document2.txt\", \"summary\": \"This is a summary of document2.txt\"}]}"
     )
-    def get_library_query_results(self, context: SKContext) -> str:
+    def get_library_query_results(self, context: KernelContext) -> str:
         try:
             results = self.client.search(search_text=context["userinput"],
                                          include_total_count=True,
@@ -60,7 +60,9 @@ class QueryIndexPlugin:
                 "question": context["userinput"]
             }
             
-            retresultstr = json.dumps(assistantAction).encode('utf-8').decode('unicode_escape').replace('\n', ' ').replace('\r', '').replace(' ', ' ')
+            retresultstr = json.dumps(assistantAction)
+            #.encode('utf-8').decode('unicode_escape')
+            os.system('cls' if os.name == 'nt' else 'clear')
             print (retresultstr)
             return retresultstr
         except Exception as e:

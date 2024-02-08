@@ -9,6 +9,8 @@ from dataclasses import dataclass
 import json
 import logging
 from typing import List
+
+from plugins.library.query_index.native_function import QueryIndexPlugin
  
 app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
@@ -41,27 +43,28 @@ async def processQuery(query):
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
     kernel.add_chat_service("GPT", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
            
-    native_plugins = kernel.import_native_plugin_from_directory("plugins/library", "query_index")
-    semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library")
+    query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
+    semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
     # Define the plan
-    seqPlanner = SequentialPlanner(kernel)
+    planner = SequentialPlanner(kernel)
     planDirective = """To interact with the Azure Search Library index, 
                     retrieve relevant documents based on the user's query,
                     process the results
                     and prepare a response to send back to the librarian in valid JSON Format.
                     """
-    seqPlan = await seqPlanner.create_plan_async(goal=planDirective)
+    sequential_plan = await planner.create_plan(goal=planDirective)
     
     # DEBUG: output the plan steps
-    for step in seqPlan._steps:
+    for step in sequential_plan._steps:
         print(step.description, ":", step._state.__dict__)
     planContext = kernel.create_new_context(variables=ContextVariables(variables={"userinput": query}))
     
     # execute the plan Steps in Sequence
-    assistantResponse = await seqPlan.invoke_async(query, planContext)
+    assistantResponse = await sequential_plan.invoke(query, planContext)
     
     # Transform the result into a JSON object
+    print(assistantResponse.result)
     data_dict = json.loads(assistantResponse.result)
     assistantAction = AssistantAction(**data_dict)
     chatTurnResponse = assistantAction.records

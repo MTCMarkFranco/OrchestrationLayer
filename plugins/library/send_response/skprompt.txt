@@ -1,7 +1,11 @@
-The user has submitted the following question:
-{{$userinput}}
+[INSTRUCTION]
+Your task is to add the user's question to the json data as a root level key-value pair. The key should be "user_question" and the value should be the user's question. After adding the user's question, return the updated json data.
+[INSTRUCTION]
 
-You are given the following data:
-{{$input}}
+[USER QUESTION]
+User's question: {{$userinput}}
+[USER QUESTION]
 
-Your primary task is to return the JSON object in the data.
+[DATA]
+Provided data: {{$input}}
+[DATA]

@@ -1,0 +1,151 @@
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 13:37:53] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 83, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 56, in processQuery
+    seqPlan = await seqPlanner.create_plan_async(goal=planDirective)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SequentialPlanner' object has no attribute 'create_plan_async'
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=101, prompt_tokens=1002, total_tokens=1103)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'c820aa43-c6b1-11ee-bdd0-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'c820aa43-c6b1-11ee-bdd0-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 18:42:17 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=986, total_tokens=1242)
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 13:43:04] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 83, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 68, in processQuery
+    data_dict = json.loads(assistantResponse.result)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\json\decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Unterminated string starting at: line 11 column 18 (char 657)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=94, prompt_tokens=1002, total_tokens=1096)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '0cc85bf3-c6b2-11ee-8fa9-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '0cc85bf3-c6b2-11ee-8fa9-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 18:44:13 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=986, total_tokens=1242)
