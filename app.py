@@ -1,15 +1,14 @@
+from semantic_kernel.orchestration.context_variables import ContextVariables
+from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
+from semantic_kernel.planning import SequentialPlanner
 from flask import Flask, request, jsonify
 from functools import wraps
 from dotenv import dotenv_values
-from semantic_kernel.orchestration.context_variables import ContextVariables
-import semantic_kernel as sk
-from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, AzureTextCompletion
-from semantic_kernel.planning import SequentialPlanner
-from semantic_kernel.planning.sequential_planner import sequential_planner_config
-from dataclasses import dataclass
 import json
 import logging
 from typing import List
+from dataclasses import dataclass
+import semantic_kernel as sk
 
 from plugins.library.query_index.native_function import QueryIndexPlugin
  
@@ -39,8 +38,7 @@ async def processQuery(query):
     logger = logging.getLogger()
     console = logging.StreamHandler()
     logger.addHandler(console)
-    logger = logging.getLogger(__name__)
- 
+     
     # Initialize the SemanticKernel
     logger.warn("Initializing SemanticKernel")
     kernel = sk.Kernel()
