@@ -1,5 +1,19 @@
 [INSTRUCTION]
-Your task is to add the user's question to the json data as a root level key-value pair. The key should be "user_question" and the value should be the user's question. After adding the user's question, return the updated json data.
+1. first task is to create a return Json Object with the following structure:
+{
+    "question": "",
+    "records": [
+        {
+            "publisheddate": "",
+            "filename": "",
+            "summary": ""
+        }
+    ]
+}
+
+2. second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
+3. third task is to map the user input to the question field in the return Json Object.
+
 [INSTRUCTION]
 
 [USER QUESTION]
