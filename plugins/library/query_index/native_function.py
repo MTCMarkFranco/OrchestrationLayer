@@ -9,9 +9,6 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
 
-# Set up logging
-logging.basicConfig(filename='app.log', level=logging.INFO)
-
 class QueryIndexPlugin:
     def __init__(self):
         self.service_name = os.getenv("AZURE_SEARCH_SERVICE")
@@ -20,6 +17,7 @@ class QueryIndexPlugin:
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
         self.endpoint = f"https://{self.service_name}.search.windows.net/"
         self.credential = AzureKeyCredential(self.api_key)
+        self.logger = logging.getLogger(__name__)
         self.client = SearchClient(endpoint=self.endpoint,
                                    index_name=self.index_name,
                                    credential=self.credential)
@@ -35,6 +33,7 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
+            self.logger.info(f"Querying the index for: {context['userinput']}...")
             results = self.client.search(search_text=context["userinput"],
                                          include_total_count=True,
                                          search_fields=["keyphrases"],  
@@ -59,8 +58,10 @@ class QueryIndexPlugin:
                 "question": context["userinput"]
             }
             
+            self.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(assistantAction)
+            self.logger.info(f"return results from index...")
             return retresultstr
         except Exception as e:
-            logging.error(f"Error occurred while querying the index: {e}")
+            self.logger.error(f"Error occurred while querying the index: {e}")
             return jsonify({"error": str(e)})

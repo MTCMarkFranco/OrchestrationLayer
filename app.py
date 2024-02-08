@@ -5,7 +5,9 @@ from flask import Flask, request, jsonify
 from functools import wraps
 from dotenv import dotenv_values
 import json
+import time
 import logging
+import colorlog
 from typing import List
 from dataclasses import dataclass
 import semantic_kernel as sk
@@ -15,7 +17,18 @@ from plugins.library.query_index.native_function import QueryIndexPlugin
 app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
 apiKey = config.get("API_KEY", None)
- 
+
+class DurationFormatter(colorlog.ColoredFormatter):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.start_time = time.time()
+
+    def format(self, record):
+        duration = time.time() - self.start_time
+        self.start_time = time.time()
+        record.duration = "{:.1f}".format(duration)
+        return super().format(record)
+    
 @dataclass
 class Record:
     publisheddate: str
@@ -33,9 +46,11 @@ async def processQuery(query):
     chatTurnResponse = None
    
     # Set up logging
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-    # have the logger output to console
-    logger = logging.getLogger()
+    handler = colorlog.StreamHandler()
+    handler.setFormatter(DurationFormatter('%(log_color)s%(levelname)s: Previous Step Time: %(duration)s(seconds). Next Step: %(message)s'))
+    logger: logging.Logger = colorlog.getLogger(__name__)
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)
      
     # Initialize the SemanticKernel
     logger.info("Initializing SemanticKernel")

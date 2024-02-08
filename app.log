@@ -1018,3 +1018,149 @@ INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage
 WARNING:root:Transmogrifying ( Shaping ) the result...
 WARNING:root:Chat Turn Complete! Returning the response...
 INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 15:21:41] "POST /query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:Initializing SemanticKernel
+INFO:root:Loading Semantic and Native Plugins...
+INFO:root:Generating the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=116, prompt_tokens=1019, total_tokens=1135)
+INFO:root:Executing the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=107, prompt_tokens=171, total_tokens=278)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '207'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'fb3773bc-c6bf-11ee-8650-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'fb3773bc-c6bf-11ee-8650-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 20:23:56 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=802, prompt_tokens=928, total_tokens=1730)
+INFO:root:Transmogrifying ( Shaping ) the result...
+INFO:root:Chat Turn Complete! Returning the response...
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 15:24:12] "POST /query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:root:Initializing SemanticKernel
+INFO:root:Loading Semantic and Native Plugins...
+INFO:root:Generating the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=116, prompt_tokens=1019, total_tokens=1135)
+INFO:root:Executing the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=107, prompt_tokens=171, total_tokens=278)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '207'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'dc464891-c6c0-11ee-8ada-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'dc464891-c6c0-11ee-8ada-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 20:30:14 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=802, prompt_tokens=928, total_tokens=1730)
+INFO:root:Transmogrifying ( Shaping ) the result...
+INFO:root:Chat Turn Complete! Returning the response...
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 15:30:32] "POST /query HTTP/1.1" 200 -
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:app:Loading Semantic and Native Plugins...
+INFO:app:Generating the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=88, prompt_tokens=1019, total_tokens=1107)
+INFO:app:Executing the plan...
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '207'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'f7e2cd61-c6c1-11ee-b677-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'f7e2cd61-c6c1-11ee-b677-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 20:38:10 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /deployments/GPT4/chat/completions in 57.000000 seconds
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:app:Loading Semantic and Native Plugins...
+INFO:app:Generating the plan...
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=88, prompt_tokens=1019, total_tokens=1107)
+INFO:app:Executing the plan...
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '207'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '38f243f9-c6c2-11ee-9caa-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '38f243f9-c6c2-11ee-9caa-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 20:39:59 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT4/chat/completions?api-version=2023-05-15 "HTTP/1.1 429 Too Many Requests"
+INFO:openai._base_client:Retrying request to /deployments/GPT4/chat/completions in 57.000000 seconds
