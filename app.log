@@ -215,3 +215,614 @@ Response headers:
     'Date': 'Thu, 08 Feb 2024 19:07:58 GMT'
 INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
 INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1038, total_tokens=1294)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=83, prompt_tokens=992, total_tokens=1075)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'b5a46b0e-c6b5-11ee-abbb-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'b5a46b0e-c6b5-11ee-abbb-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:10:25 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1124, total_tokens=1380)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=107, prompt_tokens=1002, total_tokens=1109)
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=141, prompt_tokens=155, total_tokens=296)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '6f657edd-c6b6-11ee-961b-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '6f657edd-c6b6-11ee-961b-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:15:36 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1038, total_tokens=1294)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=107, prompt_tokens=1002, total_tokens=1109)
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=160, prompt_tokens=171, total_tokens=331)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '557d7bed-c6b7-11ee-be26-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '557d7bed-c6b7-11ee-be26-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:22:02 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1054, total_tokens=1310)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=75, prompt_tokens=997, total_tokens=1072)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'b2155f8e-c6b8-11ee-853d-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'b2155f8e-c6b8-11ee-853d-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:31:47 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1054, total_tokens=1310)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:40:12] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 48, in processQuery
+    semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library")
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\kernel.py", line 815, in import_semantic_plugin_from_directory
+    config = PromptTemplateConfig.from_json(config_file.read())
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\semantic_functions\prompt_template_config.py", line 55, in from_json
+    return cls.from_dict(json.loads(json_str))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\semantic_functions\prompt_template_config.py", line 51, in from_dict
+    return cls(**config)
+           ^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\pydantic\main.py", line 171, in __init__
+    self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 1 validation error for PromptTemplateConfig
+schema
+  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='https://workflow-schemas...nai.com/completion.json', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.6/v/int_parsing
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=75, prompt_tokens=997, total_tokens=1072)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '0e16dac4-c6ba-11ee-8025-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '0e16dac4-c6ba-11ee-8025-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:41:31 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=256, prompt_tokens=1054, total_tokens=1310)
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=93, prompt_tokens=997, total_tokens=1090)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'f8a1d2f4-c6ba-11ee-afa8-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'f8a1d2f4-c6ba-11ee-afa8-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:48:04 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 400 model_error"
+ERROR:semantic_kernel.planning.plan:Something went wrong in plan step library.send_response:'(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}'))'
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:48:04] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 65, in processQuery
+    assistantResponse = await sequential_plan.invoke(query, planContext)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 179, in invoke
+    await self.invoke_next_step(function_context)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 269, in invoke_next_step
+    raise KernelException(
+semantic_kernel.kernel_exception.KernelException: (<ErrorCodes.FunctionInvokeError: 8>, 'Error occurred while running plan step: (<ErrorCodes.ServiceError: 6>, "<class \'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion\'> service failed to complete the prompt", BadRequestError(\'Error code: 400 - {\\\'error\\\': {\\\'message\\\': "This model\\\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \\\'type\\\': \\\'invalid_request_error\\\', \\\'param\\\': \\\'messages\\\', \\\'code\\\': \\\'context_length_exceeded\\\'}}\'))', AIException(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}')))
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=75, prompt_tokens=997, total_tokens=1072)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '4e0cefef-c6bb-11ee-b024-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '4e0cefef-c6bb-11ee-b024-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:50:28 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 400 model_error"
+ERROR:semantic_kernel.planning.plan:Something went wrong in plan step library.send_response:'(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}'))'
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:50:27] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 65, in processQuery
+    assistantResponse = await sequential_plan.invoke(query, planContext)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 179, in invoke
+    await self.invoke_next_step(function_context)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 269, in invoke_next_step
+    raise KernelException(
+semantic_kernel.kernel_exception.KernelException: (<ErrorCodes.FunctionInvokeError: 8>, 'Error occurred while running plan step: (<ErrorCodes.ServiceError: 6>, "<class \'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion\'> service failed to complete the prompt", BadRequestError(\'Error code: 400 - {\\\'error\\\': {\\\'message\\\': "This model\\\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \\\'type\\\': \\\'invalid_request_error\\\', \\\'param\\\': \\\'messages\\\', \\\'code\\\': \\\'context_length_exceeded\\\'}}\'))', AIException(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}')))
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=93, prompt_tokens=997, total_tokens=1090)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '6c50c244-c6bb-11ee-a3ec-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '6c50c244-c6bb-11ee-a3ec-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:51:19 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 400 model_error"
+ERROR:semantic_kernel.planning.plan:Something went wrong in plan step library.send_response:'(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}'))'
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:51:18] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 65, in processQuery
+    assistantResponse = await sequential_plan.invoke(query, planContext)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 179, in invoke
+    await self.invoke_next_step(function_context)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 269, in invoke_next_step
+    raise KernelException(
+semantic_kernel.kernel_exception.KernelException: (<ErrorCodes.FunctionInvokeError: 8>, 'Error occurred while running plan step: (<ErrorCodes.ServiceError: 6>, "<class \'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion\'> service failed to complete the prompt", BadRequestError(\'Error code: 400 - {\\\'error\\\': {\\\'message\\\': "This model\\\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \\\'type\\\': \\\'invalid_request_error\\\', \\\'param\\\': \\\'messages\\\', \\\'code\\\': \\\'context_length_exceeded\\\'}}\'))', AIException(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}')))
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=75, prompt_tokens=997, total_tokens=1072)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': '8b7c7356-c6bb-11ee-8c59-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': '8b7c7356-c6bb-11ee-8c59-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:52:11 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 400 model_error"
+ERROR:semantic_kernel.planning.plan:Something went wrong in plan step library.send_response:'(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}'))'
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:52:10] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 65, in processQuery
+    assistantResponse = await sequential_plan.invoke(query, planContext)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 179, in invoke
+    await self.invoke_next_step(function_context)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 269, in invoke_next_step
+    raise KernelException(
+semantic_kernel.kernel_exception.KernelException: (<ErrorCodes.FunctionInvokeError: 8>, 'Error occurred while running plan step: (<ErrorCodes.ServiceError: 6>, "<class \'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion\'> service failed to complete the prompt", BadRequestError(\'Error code: 400 - {\\\'error\\\': {\\\'message\\\': "This model\\\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \\\'type\\\': \\\'invalid_request_error\\\', \\\'param\\\': \\\'messages\\\', \\\'code\\\': \\\'context_length_exceeded\\\'}}\'))', AIException(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}')))
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=75, prompt_tokens=997, total_tokens=1072)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'a1ecabf6-c6bb-11ee-a339-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'a1ecabf6-c6bb-11ee-a339-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 19:52:49 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 400 model_error"
+ERROR:semantic_kernel.planning.plan:Something went wrong in plan step library.send_response:'(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}'))'
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 14:52:58] "[35m[1mPOST /query HTTP/1.1[0m" 500 -
+ERROR:werkzeug:Error on request:
+Traceback (most recent call last):
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 362, in run_wsgi
+    execute(self.server.app)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\werkzeug\serving.py", line 323, in execute
+    application_iter = app(environ, start_response)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1488, in __call__
+    return self.wsgi_app(environ, start_response)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1466, in wsgi_app
+    response = self.handle_exception(e)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 1463, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 872, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 870, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\flask\app.py", line 855, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\marfra\AppData\Local\Programs\Python\Python311\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 84, in query
+    output = await processQuery(query)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\projects\ircc\OrchestrationLayer\app.py", line 65, in processQuery
+    assistantResponse = await sequential_plan.invoke(query, planContext)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 179, in invoke
+    await self.invoke_next_step(function_context)
+  File "c:\projects\ircc\OrchestrationLayer\.venv\Lib\site-packages\semantic_kernel\planning\plan.py", line 269, in invoke_next_step
+    raise KernelException(
+semantic_kernel.kernel_exception.KernelException: (<ErrorCodes.FunctionInvokeError: 8>, 'Error occurred while running plan step: (<ErrorCodes.ServiceError: 6>, "<class \'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion\'> service failed to complete the prompt", BadRequestError(\'Error code: 400 - {\\\'error\\\': {\\\'message\\\': "This model\\\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \\\'type\\\': \\\'invalid_request_error\\\', \\\'param\\\': \\\'messages\\\', \\\'code\\\': \\\'context_length_exceeded\\\'}}\'))', AIException(<ErrorCodes.ServiceError: 6>, "<class 'semantic_kernel.connectors.ai.open_ai.services.azure_chat_completion.AzureChatCompletion'> service failed to complete the prompt", BadRequestError('Error code: 400 - {\'error\': {\'message\': "This model\'s maximum context length is 16384 tokens. However, you requested 17063 tokens (1063 in the messages, 16000 in the completion). Please reduce the length of the messages or completion.", \'type\': \'invalid_request_error\', \'param\': \'messages\', \'code\': \'context_length_exceeded\'}}')))
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:app:Initializing SemanticKernel
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=116, prompt_tokens=1019, total_tokens=1135)
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=164, prompt_tokens=180, total_tokens=344)
+INFO:azure.core.pipeline.policies.http_logging_policy:Request URL: 'https://acsgroundedsearch.search.windows.net//indexes('azureblob-index-customskill-summary')/docs/search.post.search?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '254'
+    'api-key': 'REDACTED'
+    'Accept': 'application/json;odata.metadata=none'
+    'x-ms-client-request-id': 'bab2609a-c6bc-11ee-9feb-b1cc89a904df'
+    'User-Agent': 'azsdk-python-search-documents/11.4.0 Python/3.11.5 (Windows-10-10.0.22631-SP0)'
+A body is sent with the request
+INFO:azure.core.pipeline.policies.http_logging_policy:Response status: 200
+Response headers:
+    'Transfer-Encoding': 'chunked'
+    'Content-Type': 'application/json; odata.metadata=none; odata.streaming=true; charset=utf-8'
+    'Content-Encoding': 'REDACTED'
+    'Vary': 'REDACTED'
+    'Server': 'Microsoft-IIS/10.0'
+    'Strict-Transport-Security': 'REDACTED'
+    'Preference-Applied': 'REDACTED'
+    'OData-Version': 'REDACTED'
+    'request-id': 'bab2609a-c6bc-11ee-9feb-b1cc89a904df'
+    'elapsed-time': 'REDACTED'
+    'Date': 'Thu, 08 Feb 2024 20:00:40 GMT'
+INFO:httpx:HTTP Request: POST https://openaidevdemo.openai.azure.com/openai/deployments/GPT35-16K/chat/completions?api-version=2023-05-15 "HTTP/1.1 200 OK"
+INFO:semantic_kernel.connectors.ai.open_ai.services.open_ai_handler:OpenAI usage: CompletionUsage(completion_tokens=934, prompt_tokens=1063, total_tokens=1997)
+INFO:werkzeug:127.0.0.1 - - [08/Feb/2024 15:01:24] "POST /query HTTP/1.1" 200 -

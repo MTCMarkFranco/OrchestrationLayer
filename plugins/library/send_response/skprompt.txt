@@ -1,5 +1,5 @@
 [INSTRUCTION]
-1. first task is to create a return Json Object with the following structure:
+1. Your first task is to create a return Json Object with the following structure:
 {
     "question": "",
     "records": [
@@ -11,8 +11,12 @@
     ]
 }
 
-2. second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
-3. third task is to map the user input to the question field in the return Json Object.
+2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
+3. Your third task is to map the user input to the question field in the return Json Object.
+
+EMIT WELL FORMED JSON ALWAYS. 
+
+Please ensure that the entire response is included without any truncation.
 
 [INSTRUCTION]
 

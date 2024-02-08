@@ -39,10 +39,9 @@ class QueryIndexPlugin:
                                          include_total_count=True,
                                          search_fields=["keyphrases"],  
                                          select=["metadata_creation_date","metadata_storage_name","summary"],
-                                         top=10,
+                                         top=15,
                                          query_type="semantic",
                                          semantic_configuration_name=self.semntic_config)
-            #result_list = [result for result in results]
             records = []
             for result in results:
                 # Extract the desired properties from the result
@@ -61,9 +60,6 @@ class QueryIndexPlugin:
             }
             
             retresultstr = json.dumps(assistantAction)
-            #.encode('utf-8').decode('unicode_escape')
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print (retresultstr)
             return retresultstr
         except Exception as e:
             logging.error(f"Error occurred while querying the index: {e}")

@@ -5,6 +5,7 @@ from semantic_kernel.orchestration.context_variables import ContextVariables
 import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion, AzureTextCompletion
 from semantic_kernel.planning import SequentialPlanner
+from semantic_kernel.planning.sequential_planner import sequential_planner_config
 from dataclasses import dataclass
 import json
 import logging
@@ -33,7 +34,7 @@ async def processQuery(query):
     chatTurnResponse = None
    
     # Set up logging
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
  
     # Initialize the SemanticKernel
@@ -43,31 +44,34 @@ async def processQuery(query):
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
     kernel.add_chat_service("GPT", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
            
+    logger.info("Loading Semantic and Native Plugins...")
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
     # Define the plan
-    planner = SequentialPlanner(kernel)
+    logger.info("Generating the plan...")      
+    planner = SequentialPlanner(kernel=kernel)
     planDirective = """To interact with the Azure Search Library index, 
                     retrieve relevant documents based on the user's query,
-                    process the results
                     and prepare a response to send back to the librarian in valid JSON Format.
                     """
     sequential_plan = await planner.create_plan(goal=planDirective)
     
     # DEBUG: output the plan steps
-    for step in sequential_plan._steps:
-        print(step.description, ":", step._state.__dict__)
+    # for step in sequential_plan._steps:
+    #     print(step.description, ":", step._state.__dict__)
+    
+    # Execute the plan Steps in Sequence
+    logger.info("Executing the plan...")
     planContext = kernel.create_new_context(variables=ContextVariables(variables={"userinput": query}))
-    
-    # execute the plan Steps in Sequence
     assistantResponse = await sequential_plan.invoke(query, planContext)
-    
+
     # Transform the result into a JSON object
-    print(assistantResponse.result)
+    logger.info("Transmogrifying ( Shaping ) the result...")
     data_dict = json.loads(assistantResponse.result)
     assistantAction = AssistantAction(**data_dict)
     chatTurnResponse = assistantAction.records
+    logger.info("Chat Turn Complete! Returning the response...")
       
     return chatTurnResponse   
  

@@ -1,38 +1,25 @@
 {
-    "schema": 1,
-    "description": "Prepare a response in the form a well-formed JSON object wrapping the search query results from the previous step in the workflow",
-    "type": "completion",
-    "completion": {
+  "schema": 1,
+  "description": "Prepare a response in the form a well-formed JSON object wrapping the search query results from the previous step in the workflow",
+  "execution_settings": {
+    "default": {
       "max_tokens": 15000,
-      "temperature": 0.7,
-      "top_p": 0.95,
+      "temperature": 0.0,
+      "top_p": 0.0,
       "presence_penalty": 0.0,
-      "frequency_penalty": 0.0,
-      "stop": [
-        "\n"
-      ]
-    },
-    "input": {
-        "parameters": [
-          {
-            "name": "userinput",
-            "description": "The initial query or request made by the user.",
-            "defaultValue": ""
-          }, 
-        {
-          "name": "input",
-          "description": "The highest-ranking search results obtained from the previous operation in the workflow.",
-          "defaultValue": ""
-        }
-        ]
-    },
-    "output": {
-      "parameters": [
-        {
-          "name": "output",
-          "description": "JSON Object Response.",
-          "defaultValue": ""
-        }
-      ]
+      "frequency_penalty": 0.0
     }
-  }
+  },
+  "input_variables": [
+    {
+      "name": "input",
+      "description": "The highest-ranking search results obtained from the previous operation in the workflow.",
+      "default": ""
+    },
+    {
+      "name": "userinput",
+      "description": "The initial query or request made by the user.",
+      "default": ""
+    }
+  ]
+}
