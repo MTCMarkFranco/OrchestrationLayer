@@ -17,13 +17,13 @@ class QueryIndexPlugin:
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
         self.endpoint = f"https://{self.service_name}.search.windows.net/"
         self.credential = AzureKeyCredential(self.api_key)
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.getLogger("__CHATBOT__")
         self.client = SearchClient(endpoint=self.endpoint,
                                    index_name=self.index_name,
                                    credential=self.credential)
 
     @kernel_function(
-        description="This function interacts with the Azure Search Library index. It sends a query to the index, retrieves the relevant documents based on the query, and processes the results. The function is designed to work with Azure's search service, which allows for efficient search and retrieval of information stored in an Azure index.",
+        description="A Native Function to interact with the Azure Search Index to retrieve relevant documents based on the query.",
         name="get_library_query_results",
         input_description="The specific query for which the librarian requires additional information."
     )

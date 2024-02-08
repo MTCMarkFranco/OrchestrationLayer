@@ -47,40 +47,45 @@ async def processQuery(query):
    
     # Set up logging
     handler = colorlog.StreamHandler()
-    handler.setFormatter(DurationFormatter('%(log_color)s%(levelname)s: Previous Step Time: %(duration)s(seconds). Next Step: %(message)s'))
-    logger: logging.Logger = colorlog.getLogger(__name__)
+    handler.setFormatter(DurationFormatter('%(log_color)s%(levelname)s: Previous Step Time: %(duration)s(seconds). Next Step: %(message)s',
+            log_colors={
+                            'DEBUG': 'cyan',
+                            'INFO': 'green',
+                            'WARNING': 'yellow',
+                            'ERROR': 'red',
+                            'CRITICAL': 'red,bg_white',
+                        }))
+    logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
      
     # Initialize the SemanticKernel
-    logger.info("Initializing SemanticKernel")
+    logger.info("Initializing Semantic Kernel==0.5.0.dev0")
     kernel = sk.Kernel()
    
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
-    kernel.add_chat_service("GPT", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
+    kernel.add_chat_service("ChatBot-Rag", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
            
     logger.info("Loading Semantic and Native Plugins...")
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
-    # Define the plan
+    # Define the plan (Using SequentialPLanner, but note: HandleBars will replace this in the near future.)
     logger.info("Generating the plan...")      
     planner = SequentialPlanner(kernel=kernel)
-    planDirective = """To interact with the Azure Search Library index, 
-                    retrieve relevant documents based on the user's query,
-                    and prepare a response to send back to the librarian in valid JSON Format.
+    planDirective = """interact with the Azure Search Library index and retrieve relevant documents based on the user's query.
+                    then, prepare a response to send back to the user in valid JSON Format.
                     """
     sequential_plan = await planner.create_plan(goal=planDirective)
     
-    # DEBUG: output the plan steps
-    # for step in sequential_plan._steps:
-    #     print(step.description, ":", step._state.__dict__)
-    
     # Execute the plan Steps in Sequence
     logger.info("Executing the plan...")
-    planContext = kernel.create_new_context(variables=ContextVariables(variables={"userinput": query}))
-    assistantResponse = await sequential_plan.invoke(query, planContext)
-
+    planContext = kernel.create_new_context(variables=ContextVariables(variables={"input": query,"userinput": query}))
+    assistantResponse = None
+    for currentIndex, step in enumerate(sequential_plan._steps):
+        logger.info(f"Executing Step: {currentIndex+1} of {len(sequential_plan._steps)} ({step.description})")
+        assistantResponse = await step.invoke(input=query, context=planContext)
+    
     # Transform the result into a JSON object
     logger.info("Transmogrifying ( Shaping ) the result...")
     data_dict = json.loads(assistantResponse.result)
