@@ -12,7 +12,7 @@
 }
 
 2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
-3. Your third task is to map the user input to the question field in the return Json Object.
+3. Your third task is to map the user question to the question field in the return Json Object.
 
 EMIT WELL FORMED JSON ALWAYS. 
 
