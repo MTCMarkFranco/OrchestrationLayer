@@ -1,0 +1,7 @@
+The user has submitted the following question:
+{{$userinput}}
+
+You are given the following data:
+{{$input}}
+
+Your primary task is to return the JSON object in the data.

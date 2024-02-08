@@ -1,0 +1,38 @@
+{
+    "schema": 1,
+    "description": "Prepare a synthesis response to send back to the librarian including search query results",
+    "type": "completion",
+    "completion": {
+      "max_tokens": 4000,
+      "temperature": 0.0,
+      "top_p": 0.95,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0,
+      "stop": [
+        "\n"
+      ]
+    },
+    "input": {
+        "parameters": [
+          {
+            "name": "userinput",
+            "description": "The initial query or request made by the user.",
+            "defaultValue": ""
+          }, 
+        {
+          "name": "input",
+          "description": "The highest-ranking search results obtained from the previous operation in the workflow.",
+          "defaultValue": ""
+        }
+        ]
+    },
+    "output": {
+      "parameters": [
+        {
+          "name": "output",
+          "description": "JSON Object Response.",
+          "defaultValue": ""
+        }
+      ]
+    }
+  }
