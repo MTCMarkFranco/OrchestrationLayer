@@ -2,6 +2,7 @@ from semantic_kernel.orchestration.context_variables import ContextVariables
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from semantic_kernel.planning import SequentialPlanner
 from flask import Flask, request, jsonify
+from json2html import *
 from functools import wraps
 from dotenv import dotenv_values
 import json
@@ -86,14 +87,11 @@ async def processQuery(query):
         logger.info(f"Executing Step: {currentIndex+1} of {len(sequential_plan._steps)} ({step.description})")
         assistantResponse = await step.invoke(input=query, context=planContext)
     
-    # Transform the result into a JSON object
-    logger.info("Transmogrifying ( Shaping ) the result...")
-    data_dict = json.loads(assistantResponse.result)
-    assistantAction = AssistantAction(**data_dict)
-    chatTurnResponse = assistantAction
+    # Get the response from the last step in the plan
+    chatTurnResponse = assistantResponse.result
     logger.info("Chat Turn Complete! Returning the response...")
       
-    return chatTurnResponse   
+    return chatTurnResponse  
  
 @app.route("/")
 def root():
@@ -114,16 +112,6 @@ async def query():
     output = await processQuery(query)
     
     if output is None:
-        response = {
-            "success": False,
-            "error": "An error occurred while processing the query"
-        }
-    
+        return {"html": "<p>Error Getting results from Index</p>" }, 200, {'Access-Control-Allow-Origin': '*'}
     else:
-        response = {
-            "text": output
-        }
-        
-        
-    
-    return {"text": "This is a respone from a Flask server. Thankyou for your message!"}, 200, {'Access-Control-Allow-Origin': '*'}
+        return {"html": output }, 200, {'Access-Control-Allow-Origin': '*'}

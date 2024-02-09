@@ -1,29 +1,12 @@
 [INSTRUCTION]
-1. Your first task is to create a return Json Object with the following structure:
-{
-    "question": "",
-    "records": [
-        {
-            "publisheddate": "",
-            "filename": "",
-            "summary": ""
-        }
-    ]
-}
+generate a formatted and elegant HTML table for the following JSON data. 
 
-2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
-3. Your third task is to map the user question to the 'question' property on the return Json Object.
-
-EMIT WELL FORMED JSON ALWAYS.
-PERFORM ALL TASKS FIRST, THEN SEND THE ENTIRE JSON OBJECT BACK. 
-
-Please ensure that the entire response is included without any truncation.
+for each record reate a new row:
+put the file filenamein in the first column, 
+then the publisheddate in the second column, 
+then the summary in the third column,
 
 [INSTRUCTION]
-
-[USER QUESTION]
-{{$userinput}}
-[USER QUESTION]
 
 [DATA]
 {{$input}}
