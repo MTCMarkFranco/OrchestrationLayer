@@ -12,18 +12,19 @@
 }
 
 2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
-3. Your third task is to map the user question to the question field in the return Json Object.
+3. Your third task is to map the user question to the 'question' property on the return Json Object.
 
-EMIT WELL FORMED JSON ALWAYS. 
+EMIT WELL FORMED JSON ALWAYS.
+PERFORM ALL TASKS FIRST, THEN SEND THE ENTIRE JSON OBJECT BACK. 
 
 Please ensure that the entire response is included without any truncation.
 
 [INSTRUCTION]
 
 [USER QUESTION]
-User's question: {{$userinput}}
+{{$userinput}}
 [USER QUESTION]
 
 [DATA]
-Provided data: {{$input}}
+{{$input}}
 [DATA]

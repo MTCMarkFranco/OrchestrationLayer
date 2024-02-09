@@ -90,7 +90,7 @@ async def processQuery(query):
     logger.info("Transmogrifying ( Shaping ) the result...")
     data_dict = json.loads(assistantResponse.result)
     assistantAction = AssistantAction(**data_dict)
-    chatTurnResponse = assistantAction.records
+    chatTurnResponse = assistantAction
     logger.info("Chat Turn Complete! Returning the response...")
       
     return chatTurnResponse   
