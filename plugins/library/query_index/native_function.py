@@ -9,6 +9,21 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
 
+def current_threshold(numbers) -> float:
+    if len(numbers) < 2:
+        return None
+
+    max_drop = float('-inf')
+    threshold = float('-inf')
+
+    for i in range(1, len(numbers)):
+        drop = numbers[i-1] - numbers[i]
+        if drop > max_drop:
+            max_drop = drop
+            threshold = numbers[i]
+
+    return threshold
+
 class QueryIndexPlugin:
     def __init__(self):
         self.service_name = os.getenv("AZURE_SEARCH_SERVICE")
@@ -38,17 +53,24 @@ class QueryIndexPlugin:
                                          include_total_count=True,
                                          search_fields=["keyphrases"],  
                                          select=["metadata_creation_date","metadata_storage_name","summary"],
-                                         top=15,
+                                         top=20,
                                          query_type="semantic",
                                          semantic_configuration_name=self.semntic_config)
+           
+ 
+            results_list = list(results)
+            reranker_scores = [float(result.get("@search.reranker_score",float('-inf'))) for result in results_list]
+            threshold = current_threshold(reranker_scores)
             records = []
-            for result in results:
-                # Extract the desired properties from the result
-                    
+            
+            for result in results_list:
+                if result.get("@search.reranker_score") > threshold:
+                
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
                         "filename": result.get("metadata_storage_name"),
-                        "summary": result.get("summary")
+                        "summary": result.get("summary"),
+                        "relevance": result.get("@search.reranker_score")
                     }
                     
                     records.append(record)

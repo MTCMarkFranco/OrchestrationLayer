@@ -5,6 +5,7 @@ for each record reate a new row:
 put the file filenamein in the first column, 
 then the publisheddate in the second column, 
 then the summary in the third column,
+the the relevance in the fourth column.
 
 [INSTRUCTION]
 

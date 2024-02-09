@@ -2,10 +2,8 @@ from semantic_kernel.orchestration.context_variables import ContextVariables
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from semantic_kernel.planning import SequentialPlanner
 from flask import Flask, request, jsonify
-from json2html import *
 from functools import wraps
 from dotenv import dotenv_values
-import json
 import time
 import logging
 import colorlog
