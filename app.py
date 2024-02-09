@@ -57,7 +57,7 @@ async def processQuery(query):
                         }))
     logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
     logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
      
     # Initialize the SemanticKernel
     logger.info("Initializing Semantic Kernel==0.5.0.dev0")
@@ -98,12 +98,19 @@ async def processQuery(query):
 @app.route("/")
 def root():
     return "Hello. chat API here to help you!"
-   
+
+@app.route('/query', methods=['OPTIONS'])
+def options():
+    return {'Allow' : 'GET, POST, OPTIONS'}, 200, \
+    { 'Access-Control-Allow-Origin': '*', \
+      'Access-Control-Allow-Methods' : 'POST, OPTIONS', \
+      'Access-Control-Allow-Headers' : 'Content-Type' }
+       
 @app.route("/query", methods=["POST"])
 async def query():
     body = request.get_json()
-    query = body.get("query", None)
-   
+    query = body['messages'][0]['text']
+
     output = await processQuery(query)
     
     if output is None:
@@ -114,8 +121,9 @@ async def query():
     
     else:
         response = {
-            "success": True,
-            "result": output
+            "text": output
         }
+        
+        
     
-    return jsonify(response)
+    return {"text": "This is a respone from a Flask server. Thankyou for your message!"}, 200, {'Access-Control-Allow-Origin': '*'}
