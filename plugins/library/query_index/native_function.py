@@ -9,18 +9,29 @@ from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
 
+def check_whole_numbers(lst):
+    if all(int(num) == int(lst[0]) for num in lst):
+        return None
+    return lst
+
 def current_threshold(numbers) -> float:
+    
     if len(numbers) < 2:
         return None
 
-    max_drop = float('-inf')
-    threshold = float('-inf')
+    returnNumberORNone = check_whole_numbers(numbers)
+    
+    if returnNumberORNone == None:
+        threshold = None
+    else:
+        max_drop = float('-inf')
+        threshold = float('-inf')
 
-    for i in range(1, len(numbers)):
-        drop = numbers[i-1] - numbers[i]
-        if drop > max_drop:
-            max_drop = drop
-            threshold = numbers[i]
+        for i in range(1, len(returnNumberORNone)):
+            drop = returnNumberORNone[i-1] - returnNumberORNone[i]
+            if drop > max_drop:
+                max_drop = drop
+                threshold = returnNumberORNone[i]
 
     return threshold
 
