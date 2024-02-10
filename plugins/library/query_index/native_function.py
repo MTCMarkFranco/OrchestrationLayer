@@ -8,6 +8,8 @@ from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
+import tiktoken
+
 
 def check_whole_numbers(lst):
     if all(int(num) == int(lst[0]) for num in lst):
@@ -19,19 +21,19 @@ def current_threshold(numbers) -> float:
     if len(numbers) < 2:
         return None
 
-    returnNumberORNone = check_whole_numbers(numbers)
+    #returnNumberORNone = check_whole_numbers(numbers)
     
-    if returnNumberORNone == None:
+    if numbers == None:
         threshold = None
     else:
         max_drop = float('-inf')
         threshold = float('-inf')
 
-        for i in range(1, len(returnNumberORNone)):
-            drop = returnNumberORNone[i-1] - returnNumberORNone[i]
+        for i in range(1, len(numbers)):
+            drop = numbers[i-1] - numbers[i]
             if drop > max_drop:
                 max_drop = drop
-                threshold = returnNumberORNone[i]
+                threshold = numbers[i]
 
     return threshold
 
@@ -44,6 +46,7 @@ class QueryIndexPlugin:
         self.endpoint = f"https://{self.service_name}.search.windows.net/"
         self.credential = AzureKeyCredential(self.api_key)
         self.logger = logging.getLogger("__CHATBOT__")
+        self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
         self.client = SearchClient(endpoint=self.endpoint,
                                    index_name=self.index_name,
                                    credential=self.credential)
@@ -62,26 +65,32 @@ class QueryIndexPlugin:
             self.logger.info(f"Querying the index for: {context['userinput']}...")
             results = self.client.search(search_text=context["userinput"],
                                          include_total_count=True,
-                                         search_fields=["keyphrases"],  
+                                         search_fields=["keyphrases","content"],  
                                          select=["metadata_creation_date","metadata_storage_name","summary"],
-                                         top=5,
+                                         top=100,
+                                         query_answer="extractive",
+                                         search_mode="any",
                                          query_type="semantic",
+                                         query_answer_threshold=0.9,
                                          semantic_configuration_name=self.semntic_config)
            
  
+            # Extract the results and create a dynamic threshold from the reranker scores
             results_list = list(results)
             reranker_scores = [float(result.get("@search.reranker_score",float('-inf'))) for result in results_list]
             threshold = current_threshold(reranker_scores)
             records = []
             
             for result in results_list:
+                # Filter out results with a reranker score below the threshold
+                # Remove this if you want to return all results
                 if threshold is None or result.get("@search.reranker_score") > threshold:
                 
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
                         "filename": result.get("metadata_storage_name"),
                         "summary": result.get("summary"),
-                        "relevance": result.get("@search.reranker_score")
+                        "rankedscore": result.get("@search.reranker_score")
                     }
                     
                     records.append(record)
@@ -94,6 +103,8 @@ class QueryIndexPlugin:
             self.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(assistantAction)
             self.logger.info(f"return results from index...")
+            tokens_count = len(list(self.tokenizer.encode(retresultstr)))
+            self.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
             self.logger.error(f"Error occurred while querying the index: {e}")

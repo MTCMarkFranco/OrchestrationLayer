@@ -5,3 +5,4 @@ semantic-kernel==0.5.0.dev0
 azure.search.documents
 colorlog
 json2html
+tiktoken

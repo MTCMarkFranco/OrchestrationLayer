@@ -3,7 +3,7 @@
   "description": "A Semantic Function that Calls Azure Open AI to prepare a response in the form of a well-formed JSON object wrapping the search query results from the previous step in the workflow",
   "execution_settings": {
     "default": {
-      "max_tokens": 15000,
+      "max_tokens": 4000,
       "temperature": 0.0,
       "top_p": 0.0,
       "presence_penalty": 0.0,
