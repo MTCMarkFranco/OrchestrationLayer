@@ -2,10 +2,12 @@
 generate a formatted and elegant HTML table for the following JSON data. 
 
 for each record reate a new row:
-put the file filenamein in the first column, 
+the first column should be a hyperlink with the text being filename and the link formulated as such: https://groundingdata.blob.core.windows.net/customskilldocssummary/<filename> , the hyperlink when clicked should open a new browser window , 
 then the publisheddate in the second column, 
 then the summary in the third column,
 the the relevance in the fourth column.
+
+
 
 [INSTRUCTION]
 
