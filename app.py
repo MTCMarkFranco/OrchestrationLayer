@@ -15,7 +15,6 @@ from plugins.library.query_index.native_function import QueryIndexPlugin
  
 app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
-apiKey = config.get("API_KEY", None)
 
 class DurationFormatter(colorlog.ColoredFormatter):
     def __init__(self, *args, **kwargs):

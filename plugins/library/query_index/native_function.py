@@ -53,7 +53,7 @@ class QueryIndexPlugin:
                                          include_total_count=True,
                                          search_fields=["keyphrases"],  
                                          select=["metadata_creation_date","metadata_storage_name","summary"],
-                                         top=20,
+                                         top=5,
                                          query_type="semantic",
                                          semantic_configuration_name=self.semntic_config)
            
@@ -64,7 +64,7 @@ class QueryIndexPlugin:
             records = []
             
             for result in results_list:
-                if result.get("@search.reranker_score") > threshold:
+                if threshold is None or result.get("@search.reranker_score") > threshold:
                 
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
