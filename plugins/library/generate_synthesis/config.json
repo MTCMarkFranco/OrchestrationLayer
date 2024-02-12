@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "A Semantic Function that generates a synthesis (Summarization) of the search results obtained from the history of the conversation.",
+  "description": "A Semantic Function that generates a synthesis of the search results obtained from the history of the conversation, if it exists.",
   "execution_settings": {
     "default": {
       "max_tokens": 4000,

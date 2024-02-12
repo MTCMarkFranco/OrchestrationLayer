@@ -1,17 +1,18 @@
 [INSTRUCTION]
-generate a formatted and elegant HTML table for the following JSON data. 
+1. Your first task is to create a return Json Object with the following structure:
+{
+    "records": [
+        {
+            "publisheddate": "",
+            "filename": "",
+            "summary": ""
+        }
+    ]
+}
 
-for each record reate a new row:
-the first column should be a hyperlink with the text being filename and the link formulated as such: https://groundingdata.blob.core.windows.net/customskilldocssummary/<filename> , the hyperlink when clicked should open a new browser window , 
-then the publisheddate in the second column (Convert the date publisheddate from ISO 8601 format to a more readable format, leaving out the Time component.), 
-then the summary in the third column,
-then the rankedscore in the fourth column (format the rankedscore to 1 decimal place).
-add a row at the end of the table 
-add a column with colspan=4 with value of the total number of records.
+2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
 
-outside of the table ask this question: "Would you like to generate a synthesis on these records?"
-
-You must use as few tokens as possible for the completion.
+EMIT WELL FORMED JSON ALWAYS and ONLY. No OTher characters are allowed. 
 
 [INSTRUCTION]
 

@@ -15,11 +15,6 @@
       "name": "input",
       "description": "The highest-ranking search results obtained from the previous operation in the workflow.",
       "default": ""
-    },
-    {
-      "name": "userinput",
-      "description": "The initial query or request made by the user.",
-      "default": ""
     }
   ]
 }

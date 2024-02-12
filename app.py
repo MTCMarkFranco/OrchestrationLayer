@@ -94,17 +94,18 @@ async def processQuery(query):
     logger.info("Generating the plan...")      
     planner = SequentialPlanner(kernel=kernel)
     
-    planDirective = f"Reflecting on the conversation history: [CHAT_HISTORY]{chat_history.get_messages()}[CHAT_HISTORY], " \
-                     "If the user responded 'yes' to assistant's question: Would you like to generate a synthesis on these records? in the chat history " \
-                     "then generate a synthesis. otherwise, do nothing."
+    # planDirective = f"Analyzing the chat history " \
+    #                  "If the user responded 'yes' to the assistant's question: 'Would you like to generate a synthesis on these records?' " \
+    #                  "then generate a synthesis. otherwise, do nothing. " \
+    #                  "[CHAT_HISTORY]{chat_history.get_messages()}[CHAT_HISTORY]"
                      
-    sequential_plan = await planner.create_plan(goal=planDirective)
+    #sequential_plan = await planner.create_plan(goal=planDirective)
     
-    if  sequential_plan._steps is None:
-        planDirective = f"follow these steps to retrieve records: " \
-                     "   Step One: Interact with the Azure Search Index to retrieve relevant documents based on the query. " \
-                     "   Step Two: Pprepare a response from the search query results from the previous step in the workflow."
-    
+    #if  sequential_plan._steps is None:
+    planDirective = f"follow these steps to retrieve records: " \
+                    "   Step One: Interact with the Azure Search Index to retrieve relevant documents based on the query. " \
+                    "   Step Two: Pprepare a response from the search query results from the previous step in the workflow."
+
     sequential_plan = await planner.create_plan(goal=planDirective)                    
     
     
@@ -128,7 +129,7 @@ async def processQuery(query):
     print(chatTurnResponse)
    
       
-    return chatTurnResponse  
+    return chatTurnResponse
  
 @app.route("/")
 def root():
@@ -149,6 +150,6 @@ async def query():
     output = await processQuery(query)
     
     if output is None:
-        return {"html": "<p>Error Getting results from Index</p>" }, 200, {'Access-Control-Allow-Origin': '*'}
+        return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
     else:
-        return {"html": output }, 200, {'Access-Control-Allow-Origin': '*'}
+        return output, 200, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}

@@ -1,10 +1,16 @@
-[INSTRUCTION] 
-Kindly review the chat history and carry out the following tasks:
-If the user's response is not 'yes', kindly ask the user if they would like to try a different search query.
-If the user has responded with 'yes' to the request for a synthesis, please generate this synthesis. 
-synthesis generation should be done by summarizing all the summaries provided in the assistant's most recent response only. Please disregard any previous responses. 
-[INSTRUCTION] 
+[INSTRUCTION]
+generate a formatted and elegant HTML table for the following data: 
 
-Note: Please utilize the summary column in the assistant's response to generate the synthesis. 
+Create a new Row and Single column in the Row with a Header called "Syntheis Generated"
+
+analyze the chat history and extract the following data for each record in the Assistant's last content message:
+concatenate all the summary columns into a single string and use the chat completion model to generate a summary.
+take the result and store in the "Syntheis Generated" column.
+
+
+You must use as few tokens as possible for the completion.
+Only return the RAW HTML table and nothing else.
+
+[INSTRUCTION]
 
 [CHAT_HISTORY] {{$history}} [CHAT_HISTORY]
