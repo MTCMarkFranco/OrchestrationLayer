@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from functools import wraps
 from dotenv import dotenv_values
 import time
+import json
 import logging
 import colorlog
 from typing import List
@@ -15,6 +16,21 @@ from plugins.library.query_index.native_function import QueryIndexPlugin
  
 app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
+
+class ChatHistory:
+    def __init__(self):
+        self.history = []
+    
+    def add_message(self, message):
+        self.history.append(message)
+    
+    def get_messages(self):
+        return json.dumps(self.history)
+    
+    def clear_history(self):
+        self.history = []
+        
+chat_history = ChatHistory()
 
 class DurationFormatter(colorlog.ColoredFormatter):
     def __init__(self, *args, **kwargs):
@@ -55,7 +71,7 @@ async def processQuery(query):
                         }))
     logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
     logger.addHandler(handler)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.INFO)
      
     # Initialize the SemanticKernel
     logger.info("Initializing Semantic Kernel==0.5.0.dev0")
@@ -68,17 +84,33 @@ async def processQuery(query):
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
+    # adding current question to the chat history
+    chat_history.add_message({
+		"role": "user",
+		"content": query
+	})
+    
     # Define the plan (Using SequentialPLanner, but note: HandleBars will replace this in the near future.)
     logger.info("Generating the plan...")      
     planner = SequentialPlanner(kernel=kernel)
-    planDirective = """interact with the Azure Search Library index and retrieve relevant documents based on the user's query.
-                    then, prepare a response to send back to the user in valid JSON Format.
-                    """
+    
+    planDirective = f"Reflecting on the conversation history: [CHAT_HISTORY]{chat_history.get_messages()}[CHAT_HISTORY], " \
+                     "If the user responded 'yes' to assistant's question: Would you like to generate a synthesis on these records? in the chat history " \
+                     "then generate a synthesis. otherwise, do nothing."
+                     
     sequential_plan = await planner.create_plan(goal=planDirective)
+    
+    if  sequential_plan._steps is None:
+        planDirective = f"follow these steps to retrieve records: " \
+                     "   Step One: Interact with the Azure Search Index to retrieve relevant documents based on the query. " \
+                     "   Step Two: Pprepare a response from the search query results from the previous step in the workflow."
+    
+    sequential_plan = await planner.create_plan(goal=planDirective)                    
+    
     
     # Execute the plan Steps in Sequence
     logger.info("Executing the plan...")
-    planContext = kernel.create_new_context(variables=ContextVariables(variables={"input": query,"userinput": query}))
+    planContext = kernel.create_new_context(variables=ContextVariables(variables={"input": query,"userinput": query, "history": chat_history.get_messages()}))
     assistantResponse = None
     for currentIndex, step in enumerate(sequential_plan._steps):
         logger.info(f"Executing Step: {currentIndex+1} of {len(sequential_plan._steps)} ({step.description})")
@@ -87,6 +119,14 @@ async def processQuery(query):
     # Get the response from the last step in the plan
     chatTurnResponse = assistantResponse.result
     logger.info("Chat Turn Complete! Returning the response...")
+        
+    chat_history.add_message({
+        "role": "assistant",
+        "content": chatTurnResponse
+    })
+        
+    print(chatTurnResponse)
+   
       
     return chatTurnResponse  
  

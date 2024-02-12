@@ -9,6 +9,8 @@ then the rankedscore in the fourth column (format the rankedscore to 1 decimal p
 add a row at the end of the table 
 add a column with colspan=4 with value of the total number of records.
 
+outside of the table ask this question: "Would you like to generate a synthesis on these records?"
+
 You must use as few tokens as possible for the completion.
 
 [INSTRUCTION]

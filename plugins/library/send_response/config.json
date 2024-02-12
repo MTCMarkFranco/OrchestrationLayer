@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "A Semantic Function that Calls Azure Open AI to prepare a response in the form of a well-formed JSON object wrapping the search query results from the previous step in the workflow",
+  "description": "A Semantic Function that Calls Azure Open AI to prepare a response from the search query results from the previous step in the workflow",
   "execution_settings": {
     "default": {
       "max_tokens": 4000,

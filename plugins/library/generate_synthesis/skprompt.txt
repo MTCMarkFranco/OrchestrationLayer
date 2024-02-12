@@ -1,0 +1,10 @@
+[INSTRUCTION] 
+Kindly review the chat history and carry out the following tasks:
+If the user's response is not 'yes', kindly ask the user if they would like to try a different search query.
+If the user has responded with 'yes' to the request for a synthesis, please generate this synthesis. 
+synthesis generation should be done by summarizing all the summaries provided in the assistant's most recent response only. Please disregard any previous responses. 
+[INSTRUCTION] 
+
+Note: Please utilize the summary column in the assistant's response to generate the synthesis. 
+
+[CHAT_HISTORY] {{$history}} [CHAT_HISTORY]
