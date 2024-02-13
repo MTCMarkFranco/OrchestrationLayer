@@ -82,6 +82,7 @@ async def processQuery(query):
                             'CRITICAL': 'red,bg_white',
                         }))
     logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
+    logger.handlers = []
     logger.addHandler(handler)
     logger.setLevel(logging.INFO)
      
@@ -115,25 +116,27 @@ async def processQuery(query):
     if action.action == "search":
         # Get the response from the last step in the plan
         searchRecords = await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)
-        assistantResponse = await semantic_plugins["send_response"].invoke(input=searchRecords.result, context=KernelContext)
+        assistantResponse = (await semantic_plugins["send_response"].invoke(input=searchRecords.result, context=KernelContext)).result
     
     if action.action == "synthesize":
         # Get the response from the last step in the plan
         lastQueryResultsJson = chat_history.get_last_assistant_response()
-        assistantResponse = await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)
+        assistantResponse = (await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
 
-    
-    # Get the response from the last step in the plan
-    chatTurnResponse = assistantResponse.result
+    if action.action == "None":
+        chat_history.clear_history()
+        assistantResponse = json.dumps({ "None": {}} )
+                               
+    chatTurnResponse = assistantResponse
     logger.info("Chat Turn Complete! Returning the response...")
         
+    # adding current response to the chat history
     chat_history.add_message({
         "role": "assistant",
         "content": chatTurnResponse
     })
         
     print(chatTurnResponse)
-   
       
     return chatTurnResponse
  

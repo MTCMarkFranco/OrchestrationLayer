@@ -1,10 +1,10 @@
 {
   "schema": 1,
-  "description": "A Semantic Function that generates a synthesis of the search results obtained from the input, if it exists.",
+  "description": "A Semantic Function that generates a synthesis (Summarization) of the search results obtained from the history of the conversation.",
   "execution_settings": {
     "default": {
       "max_tokens": 4000,
-      "temperature": 0.0,
+      "temperature": 0.7,
       "top_p": 0.0,
       "presence_penalty": 0.0,
       "frequency_penalty": 0.0
@@ -12,15 +12,14 @@
   },
   "input_variables": [
     {
-      "name": "input",
-      "description": "The last records returned from the Search query.",
+      "name": "history",
+      "description": "The conversation history so far.",
       "default": ""
-    }
-  ],
-  "output_variables": [
+    },
     {
-      "name": "output",
-      "description": "The synthesis of the search results obtained from the input, if it exists."
+      "name": "userinput",
+      "description": "The current query or request made by the user.",
+      "default": ""
     }
   ]
 }
