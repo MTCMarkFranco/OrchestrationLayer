@@ -7,13 +7,13 @@
             "filename": "",
             "summary": "",
             "rankedscore": "",
-            "path": "https://groundingdata.blob.core.windows.net/customskilldocssummary"
+            "path": ""
         }
     ]
 }
 
 2. Your second task is to map the records in the data section to the records array in the return Json Object. The records array will have the same field names as the input data.
-3. Always use the value of path for all records in the return Json Object.
+3. The value for path is the same for all records: "https://groundingdata.blob.core.windows.net/customskilldocssummary"
 
 EMIT WELL FORMED JSON ALWAYS and ONLY. No OTher characters are allowed. 
 

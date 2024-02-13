@@ -1,15 +1,21 @@
 [INSTRUCTION]
 
-If the assistant's latest response is a list of records and the latest user response is giving an indication to proceed to build the synthesis, then the assistant will proceed to build the synthesis, then store this json object in the ouput variable: { "action": "synthesize" }
+Create a JSON object following the structure outlined in the DATA_STRUCTURE section. This object should contain a key "action" with a value that is either "search", "synthesize", or "None". Store this object in the output variable.
 
-If the assistant's latest response is a list of records and the latest user response is giving an indication to not proceed to build the synthesis, then the assistant will not proceed to build the synthesis, then store this json object in the ouput variable: { "action": "None" }
+The value of the "action" key is determined by the latest responses in the CHAT_HISTORY section. 
 
-If none of the above conditions are met, then store this json object in the ouput variable: { "action": "search" }
+- If the assistant's latest response is a list of records and the user's latest response indicates a desire to proceed with synthesis, set the "action" value to "synthesize".
+- If the assistant's latest response is a list of records and the user's latest response indicates no desire to proceed with synthesis, set the "action" value to "None".
+- If neither of the above conditions are met, set the "action" value to "search".
 
-only return the json object of this structure and do not modify the history variable:
+Return the newly create JSON object with appropriate action and value in the ouput of this function. Do not modify the history array and do not send anything else but the newly created JSON object. 
+Do not send the history, if you are uncertain what to return, then send this: { "action": "search"}
+}
+
+[DATA_STRUCTURE]
 {
   "action": "search" or "synthesize" or "None"
 }
-[INSTRUCTION]
+[DATA_STRUCTURE]
 
 [CHAT_HISTORY] {{$history}} [CHAT_HISTORY]
