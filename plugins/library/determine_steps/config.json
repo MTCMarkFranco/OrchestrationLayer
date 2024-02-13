@@ -16,5 +16,12 @@
       "description": "The conversation history so far.",
       "default": ""
     }
+  ],
+  "output_variables": [
+    {
+      "name": "output",
+      "description": "The action to take next in the conversation.",
+      "default": {"action": "search"}
+    }
   ]
 }

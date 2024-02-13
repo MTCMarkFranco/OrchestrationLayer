@@ -3,7 +3,7 @@
   "description": "A Semantic Function that Calls Azure Open AI to prepare a formmatted JSON response ",
   "execution_settings": {
     "default": {
-      "max_tokens": 4000,
+      "max_tokens": 5000,
       "temperature": 0.3,
       "top_p": 0.0,
       "presence_penalty": 0.0,
@@ -20,7 +20,7 @@
   "output_variables": [
     {
       "name": "output",
-      "description": "The records returned from the Search query.",
+      "description": "The formatted records processed by this function",
       "default": ""
     }
   ]

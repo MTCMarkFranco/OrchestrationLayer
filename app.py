@@ -33,8 +33,9 @@ class ChatHistory:
         return json.dumps(self.history)
     
     def clear_history(self):
-        self.history = []
-        
+        self.history.clear()
+        self.history = []        
+
 chat_history = ChatHistory()
 
 class DurationFormatter(colorlog.ColoredFormatter):
@@ -70,7 +71,7 @@ async def processQuery(query):
    
     useAzureOpenAI = True
     chatTurnResponse = None
-   
+       
     # Set up logging
     handler = colorlog.StreamHandler()
     handler.setFormatter(DurationFormatter('%(log_color)s%(levelname)s: Previous Step Time: %(duration)s(seconds). Next Step: %(message)s',
@@ -103,6 +104,8 @@ async def processQuery(query):
 		"content": query
 	})
     
+    logger.debug(chat_history.get_messages())
+    
     # Building the Kernel Context for plugins to use
     assistantResponse = None
     KernelContext = kernel.create_new_context(variables=ContextVariables(variables={"history": chat_history.get_messages()}))
@@ -115,13 +118,14 @@ async def processQuery(query):
     # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
-        searchRecords = await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)
-        assistantResponse = (await semantic_plugins["send_response"].invoke(input=searchRecords.result, context=KernelContext)).result
+        searchRecords = (await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)).result
+        assistantResponse = (await semantic_plugins["send_response"].invoke(input=searchRecords, context=KernelContext)).result
     
     if action.action == "synthesize":
         # Get the response from the last step in the plan
         lastQueryResultsJson = chat_history.get_last_assistant_response()
         assistantResponse = (await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
+        chat_history.clear_history()
 
     if action.action == "None":
         chat_history.clear_history()
