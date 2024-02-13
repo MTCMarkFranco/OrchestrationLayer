@@ -6,7 +6,7 @@ If the assistant's latest response is a list of records and the latest user resp
 
 If none of the above conditions are met, then store this json object in the ouput variable: { "action": "search" }
 
-only return the json objecy of this structure:
+only return the json object of this structure and do not modify the history variable:
 {
   "action": "search" or "synthesize" or "None"
 }
