@@ -4,13 +4,13 @@ from semantic_kernel.planning import SequentialPlanner
 from flask import Flask, request, jsonify
 from functools import wraps
 from dotenv import dotenv_values
+from typing import List
+from dataclasses import dataclass
+import semantic_kernel as sk
 import time
 import json
 import logging
 import colorlog
-from typing import List
-from dataclasses import dataclass
-import semantic_kernel as sk
 
 from plugins.library.query_index.native_function import QueryIndexPlugin
  
@@ -64,7 +64,7 @@ import dataclasses
 @dataclass
 class Action:
     action: str
-    
+
 
 async def processQuery(query):
    
@@ -84,7 +84,7 @@ async def processQuery(query):
     logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
     logger.handlers = []
     logger.addHandler(handler)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
      
     # Initialize the SemanticKernel
     logger.info("Initializing Semantic Kernel==0.5.0.dev0")
@@ -103,16 +103,16 @@ async def processQuery(query):
 		"content": query
 	})
     
+    # Building the Kernel Context for plugins to use
     assistantResponse = None
-   
     KernelContext = kernel.create_new_context(variables=ContextVariables(variables={"history": chat_history.get_messages()}))
         
+    # Step 1. Get the action to take from the semantic plugin
     resultAction = await semantic_plugins["determine_steps"].invoke(input=query, context=KernelContext)
-    
     action_dict = json.loads(resultAction.result)
     action = Action(**action_dict)
     
-    # switch statement over action.action
+    # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
         searchRecords = await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)
@@ -127,17 +127,17 @@ async def processQuery(query):
         chat_history.clear_history()
         assistantResponse = json.dumps({ "None": {}} )
                                
+    # Get the response from the action above and prepare for return...
     chatTurnResponse = assistantResponse
+    logger.debug(chatTurnResponse)
     logger.info("Chat Turn Complete! Returning the response...")
-        
-    # adding current response to the chat history
+            
+    # Adding current response to the chat history
     if action.action != "None":
         chat_history.add_message({
             "role": "assistant",
             "content": chatTurnResponse
         })
-        
-    print(chatTurnResponse)
       
     return chatTurnResponse
  
