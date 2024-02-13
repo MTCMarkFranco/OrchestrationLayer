@@ -5,12 +5,13 @@
         {
             "publisheddate": "",
             "filename": "",
-            "summary": ""
+            "summary": "",
+            "rankedscore": "",
         }
     ]
 }
 
-2. Your second task is to map the input data to the records array in the return Json Object. The records array will have the same field names as the input data.
+2. Your second task is to map the records in the data section to the records array in the return Json Object. The records array will have the same field names as the input data.
 
 EMIT WELL FORMED JSON ALWAYS and ONLY. No OTher characters are allowed. 
 

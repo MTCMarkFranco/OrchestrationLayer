@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "A Semantic Function that Calls Azure Open AI to prepare a response from the search query results from the previous step in the workflow",
+  "description": "A Semantic Function that Calls Azure Open AI to prepare a formmatted JSON response ",
   "execution_settings": {
     "default": {
       "max_tokens": 4000,
@@ -13,7 +13,14 @@
   "input_variables": [
     {
       "name": "input",
-      "description": "The highest-ranking search results obtained from the previous operation in the workflow.",
+      "description": "The highest-ranking search results obtained in JSON Format.",
+      "default": ""
+    }
+  ],
+  "output_variables": [
+    {
+      "name": "output",
+      "description": "The records returned from the Search query.",
       "default": ""
     }
   ]

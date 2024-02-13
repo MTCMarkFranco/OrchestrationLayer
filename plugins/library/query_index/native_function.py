@@ -62,8 +62,8 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            self.logger.info(f"Querying the index for: {context['userinput']}...")
-            results = self.client.search(search_text=context["userinput"],
+            self.logger.info(f"Querying the index for: {context['input']}...")
+            results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
                                          select=["metadata_creation_date","metadata_storage_name","summary"],
@@ -95,13 +95,12 @@ class QueryIndexPlugin:
                     
                     records.append(record)
 
-            assistantAction = {
-                "records": records,
-                "question": context["userinput"]
+            recordsObject = {
+                "records": records
             }
             
             self.logger.info(f"formatting results from index...")
-            retresultstr = json.dumps(assistantAction)
+            retresultstr = json.dumps(recordsObject)
             self.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
             self.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")

@@ -1,16 +1,15 @@
-[INSTRUCTION]
-generate a formatted and elegant HTML table for the following data: 
+[INSTRUCTION] You have two tasks:
 
-Create a new Row and Single column in the Row with a Header called "Syntheis Generated"
+1. Create a JSON object that will be used for output with the following structure: { "synthesis": { "summary": "" } }
+2. Analyze the data section and extract the 'summary' property from each record. Then, concatenate all the 'summary' property values into a single body of text.
+4. Use the GPT-35 model to generate a summary based on this single body of text.
+5. Store the result from the GPT-35 model from step 4. in the 'summary' property of the 'synthesis' return JSON object you created in task 1.
+6. Return the object and store it in the output variable.
 
-analyze the chat history and extract the following data for each record in the Assistant's last content message:
-concatenate all the summary columns into a single string and use the chat completion model to generate a summary.
-take the result and store in the "Syntheis Generated" column.
-
-
-You must use as few tokens as possible for the completion.
-Only return the RAW HTML table and nothing else.
+Ensure that the output is a well formed JSON object and contains no characters other than those in the JSON structure.
 
 [INSTRUCTION]
 
-[CHAT_HISTORY] {{$history}} [CHAT_HISTORY]
+[DATA]
+{{$input}}
+[DATA]

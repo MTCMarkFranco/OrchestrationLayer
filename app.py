@@ -24,6 +24,11 @@ class ChatHistory:
     def add_message(self, message):
         self.history.append(message)
     
+    def get_last_assistant_response(self):
+        for i in range(len(self.history) - 1, -1, -1):
+            if self.history[i]["role"] == "assistant":
+                return self.history[i]["content"]
+            
     def get_messages(self):
         return json.dumps(self.history)
     
@@ -53,6 +58,13 @@ class Record:
 class AssistantAction:
     records: List[Record]
     question: str
+
+import dataclasses
+
+@dataclass
+class Action:
+    action: str
+    
 
 async def processQuery(query):
    
@@ -90,32 +102,26 @@ async def processQuery(query):
 		"content": query
 	})
     
-    # Define the plan (Using SequentialPLanner, but note: HandleBars will replace this in the near future.)
-    logger.info("Generating the plan...")      
-    planner = SequentialPlanner(kernel=kernel)
-    
-    # planDirective = f"Analyzing the chat history " \
-    #                  "If the user responded 'yes' to the assistant's question: 'Would you like to generate a synthesis on these records?' " \
-    #                  "then generate a synthesis. otherwise, do nothing. " \
-    #                  "[CHAT_HISTORY]{chat_history.get_messages()}[CHAT_HISTORY]"
-                     
-    #sequential_plan = await planner.create_plan(goal=planDirective)
-    
-    #if  sequential_plan._steps is None:
-    planDirective = f"follow these steps to retrieve records: " \
-                    "   Step One: Interact with the Azure Search Index to retrieve relevant documents based on the query. " \
-                    "   Step Two: Pprepare a response from the search query results from the previous step in the workflow."
-
-    sequential_plan = await planner.create_plan(goal=planDirective)                    
-    
-    
-    # Execute the plan Steps in Sequence
-    logger.info("Executing the plan...")
-    planContext = kernel.create_new_context(variables=ContextVariables(variables={"input": query,"userinput": query, "history": chat_history.get_messages()}))
     assistantResponse = None
-    for currentIndex, step in enumerate(sequential_plan._steps):
-        logger.info(f"Executing Step: {currentIndex+1} of {len(sequential_plan._steps)} ({step.description})")
-        assistantResponse = await step.invoke(input=query, context=planContext)
+   
+    KernelContext = kernel.create_new_context(variables=ContextVariables(variables={"history": chat_history.get_messages()}))
+        
+    resultAction = await semantic_plugins["determine_steps"].invoke(input=query, context=KernelContext)
+    
+    action_dict = json.loads(resultAction.result)
+    action = Action(**action_dict)
+    
+    # switch statement over action.action
+    if action.action == "search":
+        # Get the response from the last step in the plan
+        searchRecords = await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)
+        assistantResponse = await semantic_plugins["send_response"].invoke(input=searchRecords.result, context=KernelContext)
+    
+    if action.action == "synthesize":
+        # Get the response from the last step in the plan
+        lastQueryResultsJson = chat_history.get_last_assistant_response()
+        assistantResponse = await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)
+
     
     # Get the response from the last step in the plan
     chatTurnResponse = assistantResponse.result
