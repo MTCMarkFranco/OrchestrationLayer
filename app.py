@@ -131,10 +131,11 @@ async def processQuery(query):
     logger.info("Chat Turn Complete! Returning the response...")
         
     # adding current response to the chat history
-    chat_history.add_message({
-        "role": "assistant",
-        "content": chatTurnResponse
-    })
+    if action.action != "None":
+        chat_history.add_message({
+            "role": "assistant",
+            "content": chatTurnResponse
+        })
         
     print(chatTurnResponse)
       
