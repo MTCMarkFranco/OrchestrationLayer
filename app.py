@@ -111,7 +111,7 @@ async def processQuery(query):
     resultAction = await semantic_plugins["determine_steps"].invoke(input=query, context=KernelContext)
     action_dict = json.loads(resultAction.result)
     action = Action(**action_dict)
-    
+        
     # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
