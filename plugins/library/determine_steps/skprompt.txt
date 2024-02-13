@@ -1,0 +1,15 @@
+[INSTRUCTION]
+
+If the assistant's latest response is a list of records and the latest user response is giving an indication to proceed to build the synthesis, then the assistant will proceed to build the synthesis, then store this json object in the ouput variable: { "action": "synthesize" }
+
+If the assistant's latest response is a list of records and the latest user response is giving an indication to not proceed to build the synthesis, then the assistant will not proceed to build the synthesis, then store this json object in the ouput variable: { "action": "None" }
+
+If none of the above conditions are met, then store this json object in the ouput variable: { "action": "search" }
+
+only return the json objecy of this structure:
+{
+  "action": "search" or "synthesize" or "None"
+}
+[INSTRUCTION]
+
+[CHAT_HISTORY] {{$history}} [CHAT_HISTORY]

@@ -4,17 +4,38 @@ from semantic_kernel.planning import SequentialPlanner
 from flask import Flask, request, jsonify
 from functools import wraps
 from dotenv import dotenv_values
-import time
-import logging
-import colorlog
 from typing import List
 from dataclasses import dataclass
 import semantic_kernel as sk
+import time
+import json
+import logging
+import colorlog
 
 from plugins.library.query_index.native_function import QueryIndexPlugin
  
 app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
+
+class ChatHistory:
+    def __init__(self):
+        self.history = []
+    
+    def add_message(self, message):
+        self.history.append(message)
+    
+    def get_last_assistant_response(self):
+        for i in range(len(self.history) - 1, -1, -1):
+            if self.history[i]["role"] == "assistant":
+                return self.history[i]["content"]
+            
+    def get_messages(self):
+        return json.dumps(self.history)
+    
+    def clear_history(self):
+        self.history = []
+        
+chat_history = ChatHistory()
 
 class DurationFormatter(colorlog.ColoredFormatter):
     def __init__(self, *args, **kwargs):
@@ -38,6 +59,13 @@ class AssistantAction:
     records: List[Record]
     question: str
 
+import dataclasses
+
+@dataclass
+class Action:
+    action: str
+
+
 async def processQuery(query):
    
     useAzureOpenAI = True
@@ -54,6 +82,7 @@ async def processQuery(query):
                             'CRITICAL': 'red,bg_white',
                         }))
     logger: logging.Logger = colorlog.getLogger("__CHATBOT__")
+    logger.handlers = []
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
      
@@ -68,27 +97,49 @@ async def processQuery(query):
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
-    # Define the plan (Using SequentialPLanner, but note: HandleBars will replace this in the near future.)
-    logger.info("Generating the plan...")      
-    planner = SequentialPlanner(kernel=kernel)
-    planDirective = """interact with the Azure Search Library index and retrieve relevant documents based on the user's query.
-                    then, prepare a response to send back to the user in valid JSON Format.
-                    """
-    sequential_plan = await planner.create_plan(goal=planDirective)
+    # adding current question to the chat history
+    chat_history.add_message({
+		"role": "user",
+		"content": query
+	})
     
-    # Execute the plan Steps in Sequence
-    logger.info("Executing the plan...")
-    planContext = kernel.create_new_context(variables=ContextVariables(variables={"input": query,"userinput": query}))
+    # Building the Kernel Context for plugins to use
     assistantResponse = None
-    for currentIndex, step in enumerate(sequential_plan._steps):
-        logger.info(f"Executing Step: {currentIndex+1} of {len(sequential_plan._steps)} ({step.description})")
-        assistantResponse = await step.invoke(input=query, context=planContext)
+    KernelContext = kernel.create_new_context(variables=ContextVariables(variables={"history": chat_history.get_messages()}))
+        
+    # Step 1. Get the action to take from the semantic plugin
+    resultAction = await semantic_plugins["determine_steps"].invoke(input=query, context=KernelContext)
+    action_dict = json.loads(resultAction.result)
+    action = Action(**action_dict)
+        
+    # Step 2 - Take the action
+    if action.action == "search":
+        # Get the response from the last step in the plan
+        searchRecords = await query_index_plugin["get_library_query_results"].invoke(input=query, context=KernelContext)
+        assistantResponse = (await semantic_plugins["send_response"].invoke(input=searchRecords.result, context=KernelContext)).result
     
-    # Get the response from the last step in the plan
-    chatTurnResponse = assistantResponse.result
+    if action.action == "synthesize":
+        # Get the response from the last step in the plan
+        lastQueryResultsJson = chat_history.get_last_assistant_response()
+        assistantResponse = (await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
+
+    if action.action == "None":
+        chat_history.clear_history()
+        assistantResponse = json.dumps({ "None": {}} )
+                               
+    # Get the response from the action above and prepare for return...
+    chatTurnResponse = assistantResponse
+    logger.debug(chatTurnResponse)
     logger.info("Chat Turn Complete! Returning the response...")
+            
+    # Adding current response to the chat history
+    if action.action != "None":
+        chat_history.add_message({
+            "role": "assistant",
+            "content": chatTurnResponse
+        })
       
-    return chatTurnResponse  
+    return chatTurnResponse
  
 @app.route("/")
 def root():
@@ -109,6 +160,6 @@ async def query():
     output = await processQuery(query)
     
     if output is None:
-        return {"html": "<p>Error Getting results from Index</p>" }, 200, {'Access-Control-Allow-Origin': '*'}
+        return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
     else:
-        return {"html": output }, 200, {'Access-Control-Allow-Origin': '*'}
+        return output, 200, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
