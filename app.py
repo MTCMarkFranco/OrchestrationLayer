@@ -20,12 +20,27 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 config = dotenv_values(".env")
 
 class ChatHistory:
-    def __init__(self):
-        self.history = []
+    def __init__(self,kernel: sk.Kernel, user_id: str):
+        self.user_id = user_id
+        self.index = "history"
+        self.kernel = kernel
     
-    def add_message(self, message):
-        self.history.append(message)
-    
+    async def add_message(self, message):
+        
+        # TODO: add_message working nicely
+        # do the same for the rest of the methods
+        collections = await  self.kernel.memory.get_collections()
+        if self.index in collections:
+            current_message = (await  self.kernel.memory.get(self.index,self.user_id)).text
+            if (current_message is not None):
+                current_message_obj = json.loads(current_message)
+                current_message_obj.append(message)
+            else:
+                current_message_obj = [message]
+            res = await  self.kernel.memory.save_information(self.index, id=self.user_id, text=json.dumps(current_message_obj))
+        else:
+            res = await  self.kernel.memory.save_information(self.index, id=self.user_id, text=json.dumps([message]))
+           
     def get_last_assistant_response(self):
         for i in range(len(self.history) - 1, -1, -1):
             if self.history[i]["role"] == "assistant":
@@ -37,8 +52,6 @@ class ChatHistory:
     def clear_history(self):
         self.history.clear()
         self.history = []        
-
-chat_history = ChatHistory()
 
 class DurationFormatter(colorlog.ColoredFormatter):
     def __init__(self, *args, **kwargs):
@@ -92,24 +105,32 @@ async def processQuery(query):
     # TODO: Initialize the SemanticKernel (These SHould be initialized once and reused for all requests.)
     logger.info("Initializing Semantic Kernel==0.5.1.dev0")
     kernel = sk.Kernel()
-   
+       
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
-    kernel.add_chat_service("ChatBot-Rag", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
+    kernel.add_chat_service("ChatBot-Rag", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/"))    
     kernel.add_text_completion_service("dv", AzureTextCompletion( deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
     kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
     
-    search_endpoint = f"https://{os.getenv("AZURE_SEARCH_SERVICE")}.search.windows.net/"
-    api_key = os.getenv("AZURE_SEARCH_API_KEY")
-    connector = AzureCognitiveSearchMemoryStore( vector_size=1536, search_endpoint=search_endpoint, api_key=api_key) 
+    # Register the memory store with the kernel
+    api_key, url = sk.azure_aisearch_settings_from_dot_env()
+        
+    # create a new AzureKeyCredential object
+    from azure.core.credentials import AzureKeyCredential
     
+    credential = AzureKeyCredential(api_key)
+    connector = AzureCognitiveSearchMemoryStore( azure_credentials=credential ,  vector_size=1536, search_endpoint=url) 
+    kernel.register_memory_store(memory_store=connector)
     
+    #initialize chat history
+    chat_history = ChatHistory(kernel=kernel, user_id="user1")
+        
     # Load the plugins       
     logger.info("Loading Semantic and Native Plugins...")
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
     # adding current question to the chat history
-    chat_history.add_message({
+    await chat_history.add_message(message={
 		"role": "user",
 		"content": query
 	})

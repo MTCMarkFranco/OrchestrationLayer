@@ -39,11 +39,10 @@ def current_threshold(numbers) -> float:
 
 class QueryIndexPlugin:
     def __init__(self):
-        self.service_name = os.getenv("AZURE_SEARCH_SERVICE")
         self.index_name = os.getenv("AZURE_SEARCH_INDEX")
-        self.api_key = os.getenv("AZURE_SEARCH_API_KEY")
+        self.api_key = os.getenv("AZURE_AISEARCH_API_KEY")
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
-        self.endpoint = f"https://{self.service_name}.search.windows.net/"
+        self.endpoint = os.getenv("AZURE_AISEARCH_URL")
         self.credential = AzureKeyCredential(self.api_key)
         self.logger = logging.getLogger("__CHATBOT__")
         self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
