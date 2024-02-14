@@ -7,6 +7,8 @@ from dotenv import dotenv_values
 from typing import List
 from dataclasses import dataclass
 import semantic_kernel as sk
+from semantic_kernel.connectors.ai.open_ai import ( AzureTextCompletion, AzureTextEmbedding )
+from semantic_kernel.connectors.memory.azure_cognitive_search import ( AzureCognitiveSearchMemoryStore )
 import time
 import json
 import logging
@@ -87,13 +89,21 @@ async def processQuery(query):
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
      
-    # Initialize the SemanticKernel
-    logger.info("Initializing Semantic Kernel==0.5.0.dev0")
+    # TODO: Initialize the SemanticKernel (These SHould be initialized once and reused for all requests.)
+    logger.info("Initializing Semantic Kernel==0.5.1.dev0")
     kernel = sk.Kernel()
    
     deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
     kernel.add_chat_service("ChatBot-Rag", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=endpoint))    
-           
+    kernel.add_text_completion_service("dv", AzureTextCompletion( deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
+    kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
+    
+    search_endpoint = f"https://{os.getenv("AZURE_SEARCH_SERVICE")}.search.windows.net/"
+    api_key = os.getenv("AZURE_SEARCH_API_KEY")
+    connector = AzureCognitiveSearchMemoryStore( vector_size=1536, search_endpoint=search_endpoint, api_key=api_key) 
+    
+    
+    # Load the plugins       
     logger.info("Loading Semantic and Native Plugins...")
     query_index_plugin = kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
     semantic_plugins = kernel.import_semantic_plugin_from_directory("plugins", "library") 
