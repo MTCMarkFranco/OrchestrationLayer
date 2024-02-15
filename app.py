@@ -19,49 +19,47 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 # Services Confguration
 @app.before_request
 def startup():
-    if 'g.logger' not in g:
-        g.logger = logger_service()
-    if 'g.semantic_kernel' not in g:
-        g.semantic_kernel = kernel_service()
-    if 'g.chat_history' not in g:
-        g.chat_history = chat_history_service()
+    if 'g.logger_svc' not in g:
+        g.logger_svc = logger_service()
+    if 'g.sk_service' not in g:
+        g.sk_service = kernel_service()
+    if 'g.chat_history_svc' not in g:
+        g.chat_history_svc = chat_history_service()
 
 async def processQuery(query):
    
-    useAzureOpenAI = True
     chatTurnResponse = None
+    assistantResponse = None
            
     # Load the plugins
     g.sk.load_plugins()
    
     # adding current question to the chat history
-    await g.chathistory.add_message("User1", message={
+    await g.chat_history_svc.add_message("User1", message={
 		"role": "user",
 		"content": query
 	})
     
     # debug output
-    g.logger.debug(g.chathistory.get_messages("User1"))
+    g.logger_svc.debug(g.chat_history_svc.get_messages("User1"))
     
     # Building the Kernel Context for plugins to use
-    assistantResponse = None
-    kc = g.semantic_kernel.create_new_context(variables=ContextVariables(variables={"history": g.chat_history.get_messages("User1")}))
+    kc = g.sk_service.create_new_context(variables=ContextVariables(variables={"history": g.chat_history.get_messages("User1")}))
         
     # Step 1. Get the action to take from the semantic plugin
-    resultAction = await  g.semantic_kernel.semantic_plugins["determine_steps"].invoke(input=query, context=kc)
+    resultAction = await  g.sk_service.semantic_plugins["determine_steps"].invoke(input=query, context=kc)
     action_dict = json.loads(resultAction.result)
     action = Action(**action_dict)
         
     # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
-        searchRecords = (await  g.semantic_kernel.query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
-        assistantResponse = (await  g.semantic_kernel.semantic_plugins["send_response"].invoke(input=searchRecords, context=kc)).result
+        assistantResponse = (await  g.sk_service.query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
     
     if action.action == "synthesize":
         # Get the response from the last step in the plan
         lastQueryResultsJson =  g.chat_history.get_last_assistant_response("User1")
-        assistantResponse = (await g.semantic_kernel.semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
+        assistantResponse = (await g.sk_service.semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
         g.chat_history.clear_history("User1")
 
     if action.action == "None":
@@ -70,8 +68,8 @@ async def processQuery(query):
                                
     # Get the response from the action above and prepare for return...
     chatTurnResponse = assistantResponse
-    g.logger.debug(chatTurnResponse)
-    g.logger.info("Chat Turn Complete! Returning the response...")
+    g.logger_svc.debug(chatTurnResponse)
+    g.logger_svc.info("Chat Turn Complete! Returning the response...")
             
     # Adding current response to the chat history
     if action.action != "None":

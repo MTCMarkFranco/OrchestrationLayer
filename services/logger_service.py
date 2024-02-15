@@ -1,4 +1,3 @@
-# logger_service.py
 import logging
 import colorlog
 import time

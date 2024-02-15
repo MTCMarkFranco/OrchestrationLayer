@@ -1,28 +1,19 @@
 import os
 import json
-import logging
-from typing import List
-from attr import dataclass
 from semantic_kernel.plugin_definition import kernel_function,kernel_function_context_parameter
 from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
 import tiktoken
+from flask import g
 
-
-def check_whole_numbers(lst):
-    if all(int(num) == int(lst[0]) for num in lst):
-        return None
-    return lst
 
 def current_threshold(numbers) -> float:
     
     if len(numbers) < 2:
         return None
 
-    #returnNumberORNone = check_whole_numbers(numbers)
-    
     if numbers == None:
         threshold = None
     else:
@@ -43,8 +34,8 @@ class QueryIndexPlugin:
         self.api_key = os.getenv("AZURE_AISEARCH_API_KEY")
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
         self.endpoint = os.getenv("AZURE_AISEARCH_URL")
+        self.doc_path = os.getenv("DOCUMENT_PATH")
         self.credential = AzureKeyCredential(self.api_key)
-        self.logger = logging.getLogger("__CHATBOT__")
         self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
         self.client = SearchClient(endpoint=self.endpoint,
                                    index_name=self.index_name,
@@ -61,7 +52,7 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            self.logger.info(f"Querying the index for: {context['input']}...")
+            g.logger_svc.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
@@ -89,7 +80,8 @@ class QueryIndexPlugin:
                         "publisheddate": result.get("metadata_creation_date"),
                         "filename": result.get("metadata_storage_name"),
                         "summary": result.get("summary"),
-                        "rankedscore": result.get("@search.reranker_score")
+                        "rankedscore": result.get("@search.reranker_score"),
+                        "path": self.doc_path + result.get("metadata_storage_name")
                     }
                     
                     records.append(record)
@@ -98,12 +90,12 @@ class QueryIndexPlugin:
                 "records": records
             }
             
-            self.logger.info(f"formatting results from index...")
+            g.logger_svc.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
-            self.logger.info(f"return results from index...")
+            g.logger_svc.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            self.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            g.logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
-            self.logger.error(f"Error occurred while querying the index: {e}")
+            g.logger_svc.logger.error(f"Error occurred while querying the index: {e}")
             return jsonify({"error": str(e)})
