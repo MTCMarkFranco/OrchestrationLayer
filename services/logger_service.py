@@ -1,7 +1,6 @@
 import logging
 import colorlog
 import time
-from colorlog import duration_formatter
 
 class duration_formatter(colorlog.ColoredFormatter):
     def __init__(self, *args, **kwargs):

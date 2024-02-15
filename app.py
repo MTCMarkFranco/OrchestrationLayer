@@ -1,5 +1,5 @@
 # Package Imports
-from flask import Flask, request, g
+from flask import Flask, request, current_app
 from dotenv import dotenv_values
 from semantic_kernel.orchestration.context_variables import ContextVariables
 import json
@@ -8,7 +8,8 @@ import json
 from models.data_models import Action
 from services.logger_service import logger_service
 from services.kernel_service import kernel_service
-from chat_history_service import chat_history_service
+from services.chat_history_service import chat_history_service
+from plugins.library.query_index.native_function import QueryIndexPlugin
  
 # Initialize configuration via .env file
 config = dotenv_values(".env")
@@ -18,13 +19,13 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # Services Confguration
 @app.before_request
-def startup():
-    if 'g.logger_svc' not in g:
-        g.logger_svc = logger_service()
-    if 'g.sk_service' not in g:
-        g.sk_service = kernel_service()
-    if 'g.chat_history_svc' not in g:
-        g.chat_history_svc = chat_history_service()
+def setup_services():
+    if not hasattr(current_app, "logger_svc"):
+        current_app.logger_svc = logger_service()
+    if not hasattr(current_app, "sk_service"):
+        current_app.sk_service = kernel_service()
+    if not hasattr(current_app, "chat_history_svc"):
+        current_app.chat_history_svc = chat_history_service()
 
 async def processQuery(query):
    
@@ -32,48 +33,50 @@ async def processQuery(query):
     assistantResponse = None
            
     # Load the plugins
-    g.sk.load_plugins()
+    current_app.logger_svc.logger.info("Loading Semantic and Native Plugins...")
+    query_index_plugin = current_app.sk_service.kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
+    semantic_plugins = current_app.sk_service.kernel.import_semantic_plugin_from_directory("plugins", "library") 
    
     # adding current question to the chat history
-    await g.chat_history_svc.add_message("User1", message={
+    await current_app.chat_history_svc.add_message("User1", message={
 		"role": "user",
 		"content": query
 	})
     
     # debug output
-    g.logger_svc.debug(g.chat_history_svc.get_messages("User1"))
+    current_app.logger_svc.logger.debug(await current_app.chat_history_svc.get_messages_str("User1"))
     
     # Building the Kernel Context for plugins to use
-    kc = g.sk_service.create_new_context(variables=ContextVariables(variables={"history": g.chat_history.get_messages("User1")}))
+    kc = current_app.sk_service.kernel.create_new_context(variables=ContextVariables(variables={"history": await current_app.chat_history_svc.get_messages_str("User1")}))
         
     # Step 1. Get the action to take from the semantic plugin
-    resultAction = await  g.sk_service.semantic_plugins["determine_steps"].invoke(input=query, context=kc)
+    resultAction = await  semantic_plugins["determine_steps"].invoke(input=query, context=kc)
     action_dict = json.loads(resultAction.result)
     action = Action(**action_dict)
         
     # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
-        assistantResponse = (await  g.sk_service.query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
+        assistantResponse = (await query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
     
     if action.action == "synthesize":
         # Get the response from the last step in the plan
-        lastQueryResultsJson =  g.chat_history.get_last_assistant_response("User1")
-        assistantResponse = (await g.sk_service.semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
-        g.chat_history.clear_history("User1")
+        lastQueryResultsJson = await current_app.chat_history_svc.get_last_assistant_response("User1")
+        assistantResponse = (await semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
+        current_app.chat_history_svc.clear_history("User1")
 
     if action.action == "None":
-        g.chat_history.clear_history("User1")
+        current_app.chat_history_svc.clear_history("User1")
         assistantResponse = json.dumps({ "None": {}} )
                                
     # Get the response from the action above and prepare for return...
     chatTurnResponse = assistantResponse
-    g.logger_svc.debug(chatTurnResponse)
-    g.logger_svc.info("Chat Turn Complete! Returning the response...")
+    current_app.logger_svc.logger.debug(chatTurnResponse)
+    current_app.logger_svc.logger.info("Chat Turn Complete! Returning the response...")
             
     # Adding current response to the chat history
     if action.action != "None":
-         g.chat_history.add_message("User1", message={
+         current_app.chat_history_svc.add_message("User1", message={
             "role": "assistant",
             "content": chatTurnResponse
         })
@@ -102,3 +105,5 @@ async def query():
         return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
     else:
         return output, 200, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+
+app.run(debug=True)

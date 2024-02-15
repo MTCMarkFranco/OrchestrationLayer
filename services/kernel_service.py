@@ -1,6 +1,6 @@
 # Package Imports
 import semantic_kernel as sk
-from flask import g
+from flask import current_app
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from azure.core.credentials import AzureKeyCredential
 from semantic_kernel.connectors.ai.open_ai import ( AzureTextCompletion, AzureTextEmbedding )
@@ -9,13 +9,10 @@ from semantic_kernel.connectors.memory.azure_cognitive_search import ( AzureCogn
 # Globals
 useAzureOpenAI = True
 
-# Local Imports
-from plugins.library.query_index.native_function import QueryIndexPlugin
-
 class kernel_service:
     def __init__(self):
         
-        g.logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
+        current_app.logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
         self.kernel = sk.Kernel()
 
         deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
@@ -30,9 +27,3 @@ class kernel_service:
         credential = AzureKeyCredential(api_key)
         connector = AzureCognitiveSearchMemoryStore(azure_credentials=credential, vector_size=1536, search_endpoint=url) 
         self.kernel.register_memory_store(memory_store=connector)
-    
-    def load_plugins(self):
-        # Load the plugins       
-        g.logger_svc.logger.info("Loading Semantic and Native Plugins...")
-        self.query_index_plugin = self.kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
-        self.semantic_plugins = self.kernel.import_semantic_plugin_from_directory("plugins", "library") 

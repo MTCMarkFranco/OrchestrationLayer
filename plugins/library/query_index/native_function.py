@@ -1,13 +1,12 @@
-import os
-import json
 from semantic_kernel.plugin_definition import kernel_function,kernel_function_context_parameter
 from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
 from flask import jsonify
 import tiktoken
-from flask import g
-
+from flask import current_app
+import os
+import json
 
 def current_threshold(numbers) -> float:
     
@@ -30,7 +29,7 @@ def current_threshold(numbers) -> float:
 
 class QueryIndexPlugin:
     def __init__(self):
-        self.index_name = os.getenv("AZURE_SEARCH_INDEX")
+        self.index_name = os.getenv("RECORDS_INDEX_NAME")
         self.api_key = os.getenv("AZURE_AISEARCH_API_KEY")
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
         self.endpoint = os.getenv("AZURE_AISEARCH_URL")
@@ -52,7 +51,7 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            g.logger_svc.logger.info(f"Querying the index for: {context['input']}...")
+            current_app.logger_svc.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
@@ -90,12 +89,12 @@ class QueryIndexPlugin:
                 "records": records
             }
             
-            g.logger_svc.logger.info(f"formatting results from index...")
+            current_app.logger_svc.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
-            g.logger_svc.logger.info(f"return results from index...")
+            current_app.logger_svc.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            g.logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            current_app.logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
-            g.logger_svc.logger.error(f"Error occurred while querying the index: {e}")
+            current_app.logger_svc.logger.error(f"Error occurred while querying the index: {e}")
             return jsonify({"error": str(e)})
