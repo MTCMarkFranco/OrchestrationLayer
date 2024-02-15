@@ -1,4 +1,5 @@
 flask-rest
+Flask-Session
 azure-functions
 python-dotenv==1.0.0
 semantic-kernel==0.5.1.dev0

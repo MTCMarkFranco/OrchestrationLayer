@@ -1,4 +1,4 @@
-from flask import current_app
+from services.cache_service import cache_service
 import json
 
 class chat_history_service:
@@ -9,17 +9,17 @@ class chat_history_service:
         
         # TODO: add_message working nicely
         # do the same for the rest of the methods
-        collections = await  current_app.sk_service.kernel.memory.get_collections()
+        collections = await  cache_service.get_kernel_service.kernel.memory.get_collections()
         if self.index in collections:
             try:
-                current_message = (await  current_app.sk_service.kernel.memory.get(self.index,user_id)).text
+                current_message = (await  cache_service.get_kernel_service.kernel.memory.get(self.index,user_id)).text
                 current_message_obj = json.loads(current_message)
                 current_message_obj.append(message)
             except:
                 current_message_obj = [message]
-            await  current_app.sk_service.kernel.memory.save_information(self.index, id=user_id, text=json.dumps(current_message_obj))
+            await  cache_service.get_kernel_service.kernel.memory.save_information(self.index, id=user_id, text=json.dumps(current_message_obj))
         else:
-            await  current_app.sk_service.kernel.memory.save_information(self.index, id=user_id, text=json.dumps([message]))
+            await  cache_service.get_kernel_service.kernel.memory.save_information(self.index, id=user_id, text=json.dumps([message]))
            
     async def get_last_assistant_response(self,user_id: str):
         
@@ -32,7 +32,7 @@ class chat_history_service:
     async def get_messages(self,user_id: str):
         
         try:
-            message_history = (await  current_app.sk_service.kernel.memory.get(self.index,user_id)).text
+            message_history = (await  cache_service.get_kernel_service.kernel.memory.get(self.index,user_id)).text
             message_history_obj = json.loads(message_history)
         except:
             message_history_obj = [{}]
@@ -48,7 +48,7 @@ class chat_history_service:
     async def clear_history(self,user_id: str):
         
         try:
-            await current_app.sk_service.kernel.memory.delete(self.index,user_id)
-            current_app.logger_svc.logger.info(f"Chat history for {user_id} has been cleared.")
+            await cache_service.get_kernel_service.kernel.memory.delete(self.index,user_id)
+            cache_service.get_logger_service.logger.info(f"Chat history for {user_id} has been cleared.")
         except:
-             current_app.logger_svc.logger.warn(f"Chat history for {user_id} does not exist. Nothing to do...")
+             cache_service.get_logger_service.logger.warn(f"Chat history for {user_id} does not exist. Nothing to do...")

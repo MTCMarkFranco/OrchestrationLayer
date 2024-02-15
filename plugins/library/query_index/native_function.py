@@ -2,11 +2,12 @@ from semantic_kernel.plugin_definition import kernel_function,kernel_function_co
 from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
-from flask import jsonify
 import tiktoken
-from flask import current_app
 import os
 import json
+
+# local imports
+from services.cache_service import cache_service
 
 def current_threshold(numbers) -> float:
     
@@ -51,7 +52,7 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            current_app.logger_svc.logger.info(f"Querying the index for: {context['input']}...")
+            cache_service.get_logger_service.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
@@ -75,12 +76,14 @@ class QueryIndexPlugin:
                 # Remove this if you want to return all results
                 if threshold is None or result.get("@search.reranker_score") > threshold:
                 
+                    filename = result.get("metadata_storage_name")
+                    
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
-                        "filename": result.get("metadata_storage_name"),
+                        "filename": filename,
                         "summary": result.get("summary"),
                         "rankedscore": result.get("@search.reranker_score"),
-                        "path": self.doc_path + result.get("metadata_storage_name")
+                        "path": self.doc_path + filename
                     }
                     
                     records.append(record)
@@ -89,12 +92,12 @@ class QueryIndexPlugin:
                 "records": records
             }
             
-            current_app.logger_svc.logger.info(f"formatting results from index...")
+            cache_service.get_logger_service.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
-            current_app.logger_svc.logger.info(f"return results from index...")
+            cache_service.get_logger_service.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            current_app.logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            cache_service.get_logger_service.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
-            current_app.logger_svc.logger.error(f"Error occurred while querying the index: {e}")
-            return jsonify({"error": str(e)})
+            cache_service.get_logger_service.logger.error(f"Error occurred while querying the index: {e}")
+            return json.dumps({"error": str(e)})
