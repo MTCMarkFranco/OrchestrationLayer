@@ -13,12 +13,9 @@ useAzureOpenAI = True
 
 class kernel_service:
     def __init__(self):
+                
         
-        # Service Injection
-        from services.cache_service import cache_service
-        logger_svc = cache_service.get_logger_service()
-
-        logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
+        #logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
         self.kernel = sk.Kernel()
 
         deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
@@ -35,9 +32,16 @@ class kernel_service:
         self.kernel.register_memory_store(memory_store=connector)
         
          # Load the plugins
-        logger_svc.logger.info("Loading Semantic and Native Plugins...")
+        #logger_svc.logger.info("Loading Semantic and Native Plugins...")
         self.query_index_plugin = self.kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
         self.semantic_plugins = self.kernel.import_semantic_plugin_from_directory("plugins", "library") 
     
-    def __call__(self):
-        return self.value
+class kernel_proxy:
+    
+    kernel_service = kernel_service()
+
+    @staticmethod
+    def get_kernel_service():
+        return kernel_proxy.kernel_service
+
+    

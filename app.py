@@ -6,15 +6,17 @@ import json
 
 # local imports
 from models.data_models import Action
-from services.cache_service import cache_service
+from services.kernel_service import kernel_proxy
+from services.chat_history_service import chat_history_proxy
+from services.logger_service import logger_proxy
 
 # Initialize the webserver  
 app = Flask(__name__, template_folder="templates", static_folder="static")
 
 # Service Injection
-logger_svc = cache_service.get_logger_service()
-kernel_svc = cache_service.get_kernel_service()
-chat_history_svc = cache_service.get_chat_history_service()
+kernel_svc = kernel_proxy.get_kernel_service()
+chat_history_svc=chat_history_proxy.get_chat_history_service()
+logger_svc= logger_proxy.get_logger_service()
       
 
 # Initialize configuration via .env file
@@ -26,35 +28,35 @@ async def processQuery(query):
     assistantResponse = None
    
     # adding current question to the chat history
-    await cache_service.get_chat_history_service().add_message("User1", message={
+    await chat_history_svc.add_message("User1", message={
 		"role": "user",
 		"content": query
 	})
     
     # debug output
-    logger_svc.logger.debug(await cache_service.get_chat_history_service.get_messages_str("User1"))
+    logger_svc.logger.debug(await chat_history_svc.get_messages_str("User1"))
     
     # Building the Kernel Context for plugins to use
-    kc = cache_service.get_kernel_service().kernel.create_new_context(variables=ContextVariables(variables={"history": await cache_service.get_chat_history_service.get_messages_str("User1")}))
+    kc = kernel_svc.kernel.create_new_context(variables=ContextVariables(variables={"history": await chat_history_svc.get_messages_str("User1")}))
         
     # Step 1. Get the action to take from the semantic plugin
-    resultAction = await cache_service.get_kernel_service().semantic_plugins["determine_steps"].invoke(input=query, context=kc)
+    resultAction = await kernel_svc.semantic_plugins["determine_steps"].invoke(input=query, context=kc)
     action_dict = json.loads(resultAction.result)
     action = Action(**action_dict)
         
     # Step 2 - Take the action
     if action.action == "search":
         # Get the response from the last step in the plan
-        assistantResponse = (await cache_service.get_kernel_service().query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
+        assistantResponse = (await kernel_svc.query_index_plugin["get_library_query_results"].invoke(input=query, context=kc)).result
     
     if action.action == "synthesize":
         # Get the response from the last step in the plan
-        lastQueryResultsJson = await cache_service.get_chat_history_service.get_last_assistant_response("User1")
-        assistantResponse = (await cache_service.get_kernel_service().semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
-        cache_service.get_chat_history_service.clear_history("User1")
+        lastQueryResultsJson = await chat_history_svc.get_last_assistant_response("User1")
+        assistantResponse = (await kernel_svc.semantic_plugins["generate_synthesis"].invoke(input=lastQueryResultsJson)).result
+        chat_history_svc.clear_history("User1")
 
     if action.action == "None":
-        cache_service.get_chat_history_service.clear_history("User1")
+        chat_history_svc.clear_history("User1")
         assistantResponse = json.dumps({ "None": {}} )
                                
     # Get the response from the action above and prepare for return...
@@ -64,7 +66,7 @@ async def processQuery(query):
             
     # Adding current response to the chat history
     if action.action != "None":
-         cache_service.get_chat_history_service.add_message("User1", message={
+         chat_history_svc.add_message("User1", message={
             "role": "assistant",
             "content": chatTurnResponse
         })

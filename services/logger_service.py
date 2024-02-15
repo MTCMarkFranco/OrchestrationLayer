@@ -28,3 +28,13 @@ class logger_service:
         self.logger.handlers = []
         self.logger.addHandler(handler)
         self.logger.setLevel(logging.DEBUG)
+
+class logger_proxy:
+    
+    logger_service = logger_service()
+    
+    @staticmethod
+    def get_logger_service():
+        return logger_proxy.logger_service
+
+    
