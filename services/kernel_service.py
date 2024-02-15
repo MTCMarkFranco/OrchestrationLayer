@@ -6,9 +6,7 @@ from semantic_kernel.connectors.ai.open_ai import ( AzureTextCompletion, AzureTe
 from semantic_kernel.connectors.memory.azure_cognitive_search import ( AzureCognitiveSearchMemoryStore )
 
 # local imports
-from services.cache_service import cache_service
 from plugins.library.query_index.native_function import QueryIndexPlugin
-
 
 # Globals
 useAzureOpenAI = True
@@ -16,7 +14,11 @@ useAzureOpenAI = True
 class kernel_service:
     def __init__(self):
         
-        cache_service.get_logger_service.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
+        # Service Injection
+        from services.cache_service import cache_service
+        logger_svc = cache_service.get_logger_service()
+
+        logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
         self.kernel = sk.Kernel()
 
         deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
@@ -33,6 +35,9 @@ class kernel_service:
         self.kernel.register_memory_store(memory_store=connector)
         
          # Load the plugins
-        cache_service.get_logger_service.logger.info("Loading Semantic and Native Plugins...")
-        self.query_index_plugin = cache_service.get_kernel_service.kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
-        self.semantic_plugins = cache_service.get_kernel_service.kernel.import_semantic_plugin_from_directory("plugins", "library") 
+        logger_svc.logger.info("Loading Semantic and Native Plugins...")
+        self.query_index_plugin = self.kernel.import_plugin(QueryIndexPlugin(), "QueryIndexPlugin")
+        self.semantic_plugins = self.kernel.import_semantic_plugin_from_directory("plugins", "library") 
+    
+    def __call__(self):
+        return self.value

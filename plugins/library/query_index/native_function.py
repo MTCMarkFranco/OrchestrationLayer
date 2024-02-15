@@ -6,9 +6,6 @@ import tiktoken
 import os
 import json
 
-# local imports
-from services.cache_service import cache_service
-
 def current_threshold(numbers) -> float:
     
     if len(numbers) < 2:
@@ -52,7 +49,10 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            cache_service.get_logger_service.logger.info(f"Querying the index for: {context['input']}...")
+            from services.cache_service import cache_service
+            logger_svc = cache_service.get_logger_service()
+            
+            logger_svc.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
@@ -92,12 +92,12 @@ class QueryIndexPlugin:
                 "records": records
             }
             
-            cache_service.get_logger_service.logger.info(f"formatting results from index...")
+            logger_svc.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
-            cache_service.get_logger_service.logger.info(f"return results from index...")
+            logger_svc.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            cache_service.get_logger_service.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
-            cache_service.get_logger_service.logger.error(f"Error occurred while querying the index: {e}")
+            logger_svc.logger.error(f"Error occurred while querying the index: {e}")
             return json.dumps({"error": str(e)})
