@@ -1,7 +1,15 @@
 import json
+import asyncio
+import sys
+import platform
+
+#local imports
 from services.logger_service import logger_proxy
 from services.kernel_service import kernel_proxy
 
+if platform.system() == "Windows" and sys.version_info >= (3, 8, 0):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    
 logger_svc=logger_proxy.get_logger_service()
 kernel_svc=kernel_proxy.get_kernel_service()
 
@@ -11,18 +19,20 @@ class chat_history_service:
             
     async def add_message(self, user_id: str, message):
                 
-
-        collections = await  kernel_svc.kernel.memory.get_collections()
-        if self.index in collections:
-            try:
-                current_message = (await  kernel_svc.kernel.memory.get(self.index,user_id)).text
-                current_message_obj = json.loads(current_message)
-                current_message_obj.append(message)
-            except:
-                current_message_obj = [message]
+        global logger_svc
+        global kernel_svc
+                
+        try:
+            current_message = (await kernel_svc.kernel.memory.search(self.index,user_id))[0].text
+            current_message_obj = json.loads(current_message)
+            current_message_obj.append(message)
+        except:
+            current_message_obj = [message]
+        
+        try:
             await  kernel_svc.kernel.memory.save_information(self.index, id=user_id, text=json.dumps(current_message_obj))
-        else:
-            await  kernel_svc.kernel.memory.save_information(self.index, id=user_id, text=json.dumps([message]))
+        except:
+            logger_svc.logger.error(f"Error saving chat history for {user_id}.")
            
     async def get_last_assistant_response(self,user_id: str):
         
@@ -34,9 +44,14 @@ class chat_history_service:
             
     async def get_messages(self,user_id: str):
         
+        global logger_svc
+        global kernel_svc
+        
         try:
-            message_history = (await  kernel_svc.kernel.memory.get(self.index,user_id)).text
+            message_history = (await kernel_svc.kernel.memory.search(self.index,user_id))[0].text
             message_history_obj = json.loads(message_history)
+            
+            
         except:
             message_history_obj = [{}]
                 
@@ -50,11 +65,14 @@ class chat_history_service:
     
     async def clear_history(self,user_id: str):
         
+        global logger_svc
+        global kernel_svc
+        
         try:
-            await kernel_svc.kernel.memory.delete(self.index,user_id)
+            await  kernel_svc.kernel.memory.save_information(self.index, id=user_id, text="[]")
             logger_svc.logger.info(f"Chat history for {user_id} has been cleared.")
-        except:
-            logger_svc.logger.warn(f"Chat history for {user_id} does not exist. Nothing to do...")
+        except(Exception):
+            logger_svc.logger.warn(f"Chat history excetion: {Exception}.")
 
 class chat_history_proxy:
     

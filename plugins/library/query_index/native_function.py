@@ -5,6 +5,19 @@ from azure.search.documents import SearchClient
 import tiktoken
 import os
 import json
+import platform
+import asyncio
+import sys
+
+# local imports
+from services.logger_service import logger_proxy
+
+if platform.system() == "Windows" and sys.version_info >= (3, 8, 0):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    
+# Service Injection
+logger_svc=logger_proxy.get_logger_service()
+
 
 def current_threshold(numbers) -> float:
     
@@ -49,8 +62,10 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            from services.cache_service import cache_service
-            logger_svc = cache_service.get_logger_service()
+            
+            global logger_svc
+            
+            #logger_svc = logger_proxy.get_logger_service()
             
             logger_svc.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
