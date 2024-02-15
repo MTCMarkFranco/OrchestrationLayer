@@ -1,28 +1,29 @@
-import os
-import json
-import logging
-from typing import List
-from attr import dataclass
 from semantic_kernel.plugin_definition import kernel_function,kernel_function_context_parameter
 from semantic_kernel.orchestration.kernel_context import KernelContext
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents import SearchClient
-from flask import jsonify
 import tiktoken
+import os
+import json
+import platform
+import asyncio
+import sys
 
+# local imports
+from services.logger_service import logger_proxy
 
-def check_whole_numbers(lst):
-    if all(int(num) == int(lst[0]) for num in lst):
-        return None
-    return lst
+if platform.system() == "Windows" and sys.version_info >= (3, 8, 0):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    
+# Service Injection
+logger_svc=logger_proxy.get_logger_service()
+
 
 def current_threshold(numbers) -> float:
     
     if len(numbers) < 2:
         return None
 
-    #returnNumberORNone = check_whole_numbers(numbers)
-    
     if numbers == None:
         threshold = None
     else:
@@ -39,13 +40,12 @@ def current_threshold(numbers) -> float:
 
 class QueryIndexPlugin:
     def __init__(self):
-        self.service_name = os.getenv("AZURE_SEARCH_SERVICE")
-        self.index_name = os.getenv("AZURE_SEARCH_INDEX")
-        self.api_key = os.getenv("AZURE_SEARCH_API_KEY")
+        self.index_name = os.getenv("RECORDS_INDEX_NAME")
+        self.api_key = os.getenv("AZURE_AISEARCH_API_KEY")
         self.semntic_config = os.getenv("AZURE_SEARCH_SEMANTIC_CONFIG")
-        self.endpoint = f"https://{self.service_name}.search.windows.net/"
+        self.endpoint = os.getenv("AZURE_AISEARCH_URL")
+        self.doc_path = os.getenv("DOCUMENT_PATH")
         self.credential = AzureKeyCredential(self.api_key)
-        self.logger = logging.getLogger("__CHATBOT__")
         self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
         self.client = SearchClient(endpoint=self.endpoint,
                                    index_name=self.index_name,
@@ -62,7 +62,12 @@ class QueryIndexPlugin:
     )
     def get_library_query_results(self, context: KernelContext) -> str:
         try:
-            self.logger.info(f"Querying the index for: {context['input']}...")
+            
+            global logger_svc
+            
+            #logger_svc = logger_proxy.get_logger_service()
+            
+            logger_svc.logger.info(f"Querying the index for: {context['input']}...")
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
@@ -86,11 +91,14 @@ class QueryIndexPlugin:
                 # Remove this if you want to return all results
                 if threshold is None or result.get("@search.reranker_score") > threshold:
                 
+                    filename = result.get("metadata_storage_name")
+                    
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
-                        "filename": result.get("metadata_storage_name"),
+                        "filename": filename,
                         "summary": result.get("summary"),
-                        "rankedscore": result.get("@search.reranker_score")
+                        "rankedscore": result.get("@search.reranker_score"),
+                        "path": self.doc_path + filename
                     }
                     
                     records.append(record)
@@ -99,12 +107,12 @@ class QueryIndexPlugin:
                 "records": records
             }
             
-            self.logger.info(f"formatting results from index...")
+            logger_svc.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
-            self.logger.info(f"return results from index...")
+            logger_svc.logger.info(f"return results from index...")
             tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            self.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
-            self.logger.error(f"Error occurred while querying the index: {e}")
-            return jsonify({"error": str(e)})
+            logger_svc.logger.error(f"Error occurred while querying the index: {e}")
+            return json.dumps({"error": str(e)})

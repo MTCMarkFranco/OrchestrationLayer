@@ -16,9 +16,13 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--no-reload",
+                "--host=localhost",
+                "--port=5000"
             ],
-            "jinja": true
+            "jinja": true,
+            "justMyCode": false,
+            
         }
     ]
 }

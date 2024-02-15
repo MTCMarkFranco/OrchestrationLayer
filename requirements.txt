@@ -1,8 +1,11 @@
 flask-rest
+Flask-Session
 azure-functions
 python-dotenv==1.0.0
-semantic-kernel==0.5.0.dev0
-azure.search.documents
+semantic-kernel==0.5.1.dev0
+azure-core
+azure.search.documents===11.4.0b6
 colorlog
 json2html
 tiktoken
+asyncio
