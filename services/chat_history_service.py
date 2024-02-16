@@ -10,6 +10,7 @@ from services.kernel_service import kernel_proxy
 if platform.system() == "Windows" and sys.version_info >= (3, 8, 0):
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     
+# Service Injection
 logger_svc=logger_proxy.get_logger_service()
 kernel_svc=kernel_proxy.get_kernel_service()
 
