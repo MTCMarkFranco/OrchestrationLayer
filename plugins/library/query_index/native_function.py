@@ -74,7 +74,7 @@ class QueryIndexPlugin:
                                          select=["metadata_creation_date","metadata_storage_name"],
                                          top=100,
                                          query_caption="extractive",
-                                         query_caption_highlight=True
+                                         query_caption_highlight=True,
                                          query_answer="extractive",
                                          search_mode="any",
                                          query_type="semantic",
@@ -98,21 +98,21 @@ class QueryIndexPlugin:
                     #summary = "captions and highlights object"
                     
                     #summary = [doc[self.sourcepage_field] + ": " + nonewlines(" . ".join([c.text for c in doc['@search.captions']])) async for doc in r]
+                    captions_text = ""
+                    answers_text = ""
                     
-                    if result['@search.captions'] is not None:
+                    if '@search.captions' in result:
                         captions = result['@search.captions']
                         texts = [caption.text for caption in captions]
-                        summary = ', '.join(texts)
-                    else:
-                        summary = "No summary available"
-                        
-                    if result['@search.answers'] is not None:
+                        captions_text = ', '.join(texts)
+                    
+                    if '@search.answers' in result:
                         answers = result['@search.answers']
                         highlights = [highlight.highlights for highlight in answers]
-                        summary += ', '.join(highlights)
-                    else:
-                        summary = "No summary available"
-                        
+                        answers_text += ', '.join(highlights)
+                    
+                    # temporary code as API should not do formatting
+                    summary = captions_text + "<br>" + answers_text    
                     
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
