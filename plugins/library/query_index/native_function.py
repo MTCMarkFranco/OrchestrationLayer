@@ -71,8 +71,10 @@ class QueryIndexPlugin:
             results = self.client.search(search_text=context["input"],
                                          include_total_count=True,
                                          search_fields=["keyphrases","content"],  
-                                         select=["metadata_creation_date","metadata_storage_name","summary"],
+                                         select=["metadata_creation_date","metadata_storage_name"],
                                          top=100,
+                                         query_caption="extractive",
+                                         query_caption_highlight=True
                                          query_answer="extractive",
                                          search_mode="any",
                                          query_type="semantic",
@@ -92,11 +94,30 @@ class QueryIndexPlugin:
                 if threshold is None or result.get("@search.reranker_score") > threshold:
                 
                     filename = result.get("metadata_storage_name")
+                    #summary = result.get("metadata_creation_date")[0]
+                    #summary = "captions and highlights object"
+                    
+                    #summary = [doc[self.sourcepage_field] + ": " + nonewlines(" . ".join([c.text for c in doc['@search.captions']])) async for doc in r]
+                    
+                    if result['@search.captions'] is not None:
+                        captions = result['@search.captions']
+                        texts = [caption.text for caption in captions]
+                        summary = ', '.join(texts)
+                    else:
+                        summary = "No summary available"
+                        
+                    if result['@search.answers'] is not None:
+                        answers = result['@search.answers']
+                        highlights = [highlight.highlights for highlight in answers]
+                        summary += ', '.join(highlights)
+                    else:
+                        summary = "No summary available"
+                        
                     
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
                         "filename": filename,
-                        "summary": result.get("summary"),
+                        "summary": summary,
                         "rankedscore": result.get("@search.reranker_score"),
                         "path": self.doc_path + filename
                     }

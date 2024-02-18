@@ -21,7 +21,7 @@
                 "--port=5000"
             ],
             "jinja": true,
-            "justMyCode": false,
+            "justMyCode": true,
             
         }
     ]
