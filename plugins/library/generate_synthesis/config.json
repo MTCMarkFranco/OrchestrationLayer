@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "A Semantic Function that generates a synthesis (Summarization) of the search results obtained from the history of the conversation.",
+  "description": "A Semantic Function that generates a synthesis (Summarization) of the search results obtained from the search records.",
   "execution_settings": {
     "default": {
       "max_tokens": 4000,
@@ -12,13 +12,8 @@
   },
   "input_variables": [
     {
-      "name": "history",
-      "description": "The conversation history so far.",
-      "default": ""
-    },
-    {
-      "name": "userinput",
-      "description": "The current query or request made by the user.",
+      "name": "input",
+      "description": "The records to generate an Abstractive summary from a.k.a syhtnesis",
       "default": ""
     }
   ]
