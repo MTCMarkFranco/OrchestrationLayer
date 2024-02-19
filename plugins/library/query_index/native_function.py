@@ -76,7 +76,7 @@ class QueryIndexPlugin:
                                          query_caption="extractive",
                                          query_caption_highlight=True,
                                          query_answer="extractive",
-                                         search_mode="any",
+                                         search_mode="all",
                                          query_type="semantic",
                                          query_answer_count=3,
                                          semantic_configuration_name=self.semntic_config)
@@ -84,14 +84,14 @@ class QueryIndexPlugin:
  
             # Extract the results and create a dynamic threshold from the reranker scores
             results_list = list(results)
-            reranker_scores = [float(result.get("@search.reranker_score",float('-inf'))) for result in results_list]
-            threshold = current_threshold(reranker_scores)
+            # reranker_scores = [float(result.get("@search.reranker_score",float('-inf'))) for result in results_list]
+            # threshold = current_threshold(reranker_scores)
             records = []
             
             for result in results_list:
                 # Filter out results with a reranker score below the threshold
                 # Remove this if you want to return all results
-                if threshold is None or result.get("@search.reranker_score") > threshold:
+                # if threshold is None or result.get("@search.reranker_score") > threshold:
                 
                     filename = result.get("metadata_storage_name")
                     captions_summary = ""
