@@ -78,7 +78,7 @@ class QueryIndexPlugin:
                                          query_answer="extractive",
                                          search_mode="any",
                                          query_type="semantic",
-                                         query_answer_threshold=0.9,
+                                         query_answer_count=3
                                          semantic_configuration_name=self.semntic_config)
            
  
@@ -94,32 +94,32 @@ class QueryIndexPlugin:
                 if threshold is None or result.get("@search.reranker_score") > threshold:
                 
                     filename = result.get("metadata_storage_name")
-                    #summary = result.get("metadata_creation_date")[0]
-                    #summary = "captions and highlights object"
-                    
-                    #summary = [doc[self.sourcepage_field] + ": " + nonewlines(" . ".join([c.text for c in doc['@search.captions']])) async for doc in r]
-                    captions_text = ""
-                    answers_text = ""
+                    captions_summary = ""
+                    answers_summary = ""
                     
                     if '@search.captions' in result:
                         captions = result['@search.captions']
                         texts = [caption.text for caption in captions]
+                        highlights = [caption.highlights for caption in captions]
                         captions_text = ', '.join(texts)
+                        captions_highlights = ', '.join(highlights)
+                        captions_summary = captions_highlights if captions_highlights else captions_text
                     
                     if '@search.answers' in result:
                         answers = result['@search.answers']
-                        highlights = [highlight.highlights for highlight in answers]
-                        answers_text += ', '.join(highlights)
-                    
-                    # temporary code as API should not do formatting
-                    summary = captions_text + "<br>" + answers_text    
+                        texts = [answer.text for answer in answers]
+                        highlights = [answer.highlights for answer in answers]
+                        answers_text = ', '.join(texts)
+                        answers_highlights = ', '.join(highlights)
+                        answers_summary = answers_highlights if answers_highlights else answers_text
                     
                     record = {
                         "publisheddate": result.get("metadata_creation_date"),
                         "filename": filename,
-                        "summary": summary,
                         "rankedscore": result.get("@search.reranker_score"),
-                        "path": self.doc_path + filename
+                        "path": self.doc_path,
+                        "answers": answers_summary,
+                        "captions": captions_summary,
                     }
                     
                     records.append(record)
@@ -131,8 +131,8 @@ class QueryIndexPlugin:
             logger_svc.logger.info(f"formatting results from index...")
             retresultstr = json.dumps(recordsObject)
             logger_svc.logger.info(f"return results from index...")
-            tokens_count = len(list(self.tokenizer.encode(retresultstr)))
-            logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
+            #tokens_count = len(list(self.tokenizer.encode(retresultstr)))
+            #logger_svc.logger.warn(f"Tokens Count of Payload: {tokens_count + 116} tokens.")
             return retresultstr
         except Exception as e:
             logger_svc.logger.error(f"Error occurred while querying the index: {e}")
