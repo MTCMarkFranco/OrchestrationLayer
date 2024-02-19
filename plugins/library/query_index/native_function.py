@@ -78,7 +78,7 @@ class QueryIndexPlugin:
                                          query_answer="extractive",
                                          search_mode="any",
                                          query_type="semantic",
-                                         query_answer_count=3
+                                         query_answer_count=3,
                                          semantic_configuration_name=self.semntic_config)
            
  
