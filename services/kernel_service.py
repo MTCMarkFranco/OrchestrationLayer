@@ -42,7 +42,7 @@ class kernel_service:
         #connector = AzureCognitiveSearchMemoryStore(azure_credentials=credential, vector_size=1536, search_endpoint=url) 
         #self.kernel.register_memory_store(memory_store=connector)
         
-        self.kernel.register_memory_store(memory_store=sk.memory.VolatileMemoryStore())
+        # self.kernel.register_memory_store(memory_store=sk.memory.VolatileMemoryStore())
         
          # Load the plugins
         logger_svc.logger.info("Loading Semantic and Native Plugins...")
