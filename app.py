@@ -4,6 +4,7 @@ from dotenv import dotenv_values
 import asyncio
 import sys
 import platform
+import json
 
 # local imports
 from models.data_models import Action
@@ -30,7 +31,7 @@ async def generateSynthesis(records):
     global logger_svc
 
     # Get the response from the last step in the plan
-    chatTurnAPIResponse = (await kernel_svc.semantic_plugins["generate_synthesis"].invoke(input=records)).result
+    chatTurnAPIResponse = (await kernel_svc.semantic_plugins["generate_synthesis"].invoke(input=json.dumps(records))).result
                                
     # Get the response from the action above and prepare for return...
     logger_svc.logger.debug(chatTurnAPIResponse)
@@ -57,35 +58,26 @@ async def processQuery(query):
 def root():
     return "Hello. chat API here to help you!"
 
-@app.route('/query', methods=['OPTIONS'])
+@app.route('/chat', methods=['OPTIONS'])
 def options():
     return {'Allow' : 'GET, POST, OPTIONS'}, 200, \
     { 'Access-Control-Allow-Origin': '*', \
       'Access-Control-Allow-Methods' : 'POST, OPTIONS', \
       'Access-Control-Allow-Headers' : 'Content-Type' }
        
-@app.route("/query", methods=["POST"])
-async def query():
-        
-    body = request.get_json()
-    query = body['messages'][0]['text']
-
-    output = await processQuery(query)
-    
-    if output is None:
-        return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
-    else:
-        return output, 200, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
-
-@app.route("/synthesis", methods=["POST"])
-async def synthesis():
+@app.route("/chat", methods=["POST"])
+async def chat():
         
     body = request.get_json()
     records = body['records']
-
-    output = await generateSynthesis(records)
     
+    if(records is None):
+        query = body['messages'][0]['text']
+        output = await processQuery(query)
+    else:
+        output = await generateSynthesis(records)
+        
     if output is None:
-        return {"error": "Error generating synhtesis" }, 400, {'Access-Control-Allow-Origin': '*'}
+        return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
     else:
         return output, 200, {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
