@@ -71,11 +71,12 @@ async def chat():
     body = request.get_json()
     records = body['records']
     
-    if(records is None):
+    if(records is not None and body['generate_synthesis'] == True):
+        output = await generateSynthesis(records)
+        
+    else:
         query = body['messages'][0]['text']
         output = await processQuery(query)
-    else:
-        output = await generateSynthesis(records)
         
     if output is None:
         return {"error": "Error Getting results from Index" }, 400, {'Access-Control-Allow-Origin': '*'}
