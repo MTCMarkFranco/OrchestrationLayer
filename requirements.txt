@@ -9,3 +9,4 @@ colorlog
 json2html
 tiktoken
 asyncio
+websockets
