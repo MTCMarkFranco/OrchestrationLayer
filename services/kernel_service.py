@@ -28,11 +28,11 @@ class kernel_service:
         
         logger_svc.logger.info("Initializing Semantic Kernel==0.5.1.dev0")
         self.kernel = sk.Kernel()
-
+        
         deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
         self.kernel.add_chat_service("gpt", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/"))    
-        self.kernel.add_text_completion_service("dv", AzureTextCompletion(deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
-        self.kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
+        #self.kernel.add_text_completion_service("dv", AzureTextCompletion(deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
+        #self.kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
 
         # Register the memory store with the kernel
         api_key, url = sk.azure_aisearch_settings_from_dot_env()

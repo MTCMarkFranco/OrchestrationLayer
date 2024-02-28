@@ -9,17 +9,17 @@
 [INSTRUCTION]
 
 [DATA_STRUCTURE]
-{
-  "records": [
+  [
     {
       "captions": "The first summary",
       "answers": "The first summary",
       "publisheddate": "2022-01-01",
       "filename": "file1",
-      "rankedscore": 0.9
+      "rankedscore": 0.9,
+      "path": "path1"
     }
   ]
-}
+
 [DATA_STRUCTURE]
 
 [DATA]

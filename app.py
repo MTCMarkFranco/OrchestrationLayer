@@ -22,16 +22,12 @@ logger_svc= logger_proxy.get_logger_service()
 # Initialize configuration via .env file
 config = dotenv_values(".env")
 
-async def generateSynthesis(records):
+def generateSynthesis(records):
     global kernel_svc
     global logger_svc
 
     # Get the response stream from the last step in the plan
-    response_stream = kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
-
-    async for response in response_stream:
-        # Process each response here
-        yield response.result
+    return kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
 
 async def processQuery(query):
        
@@ -50,14 +46,18 @@ async def processQuery(query):
  
 
 async def chat(websocket, path):
-    async for message in websocket:
-        message = json.loads(message)
+    async for payload in websocket:
+        payload_string = json.loads(payload)
         
-        if(message is not None and json['generate_synthesis'] == True):
-            yieldedResult = await generateSynthesis(message)
-            for result in yieldedResult:
-                await websocket.send(result)
-            
+        if(payload_string is not None and payload_string['generate_synthesis'] == True):
+            try:
+                answer = generateSynthesis(payload_string['records'])
+                async for message in answer:
+                    print(str(message[0]))
+                    await websocket.send(str(message[0]))
+            except Exception as e:
+                print(e)
+                await websocket.send({'error': 'Error Getting results from Index'})    
         else:
             query = message['messages'][0]['text']
             output = await processQuery(query)
