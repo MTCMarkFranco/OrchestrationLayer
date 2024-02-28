@@ -3,9 +3,21 @@ import semantic_kernel as sk
 import platform
 import asyncio
 import sys
-from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 from azure.core.credentials import AzureKeyCredential
 from semantic_kernel.connectors.ai.open_ai import ( AzureTextCompletion, AzureTextEmbedding )
+from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.open_ai_prompt_execution_settings import (
+    OpenAITextPromptExecutionSettings,
+    OpenAIChatPromptExecutionSettings,
+)
+from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
+    AzureChatPromptExecutionSettings,
+)
+from semantic_kernel.connectors.ai.open_ai import (
+    AzureTextCompletion,
+    AzureChatCompletion,
+    OpenAITextCompletion,
+    OpenAIChatCompletion,
+)
 
 
 # local imports
@@ -33,7 +45,8 @@ class kernel_service:
         self.kernel.add_chat_service("gpt", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/"))    
         #self.kernel.add_text_completion_service("dv", AzureTextCompletion(deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
         #self.kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
-
+        self.chat_service = AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/")    
+         
         # Register the memory store with the kernel
         api_key, url = sk.azure_aisearch_settings_from_dot_env()
 

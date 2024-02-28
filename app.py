@@ -6,6 +6,12 @@ import asyncio
 import sys
 import platform
 import json
+from semantic_kernel.connectors.ai.open_ai.prompt_execution_settings.azure_chat_prompt_execution_settings import (
+    AzureChatPromptExecutionSettings,
+)
+
+#from semantic_kernel.models.ai.chat_completion.chat_history import ChatHistory
+from semantic_kernel.models.chat.chat_message import ChatMessage
 
 # local imports
 from models.data_models import Action
@@ -22,12 +28,13 @@ logger_svc= logger_proxy.get_logger_service()
 # Initialize configuration via .env file
 config = dotenv_values(".env")
 
-def generateSynthesis(records):
+async def generateSynthesis(records):
     global kernel_svc
     global logger_svc
 
     # Get the response stream from the last step in the plan
-    return kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
+    yield kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
+    await asyncio.sleep(1)
 
 async def processQuery(query):
        
@@ -51,9 +58,32 @@ async def chat(websocket, path):
         
         if(payload_string is not None and payload_string['generate_synthesis'] == True):
             try:
-                answer = generateSynthesis(payload_string['records'])
+                #answer = generateSynthesis(payload_string['records'])
+                #answer = kernel_svc.chat_service.complete_chat_stream( semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(payload_string['records']))
+                az_oai_chat_prompt_execution_settings = AzureChatPromptExecutionSettings(
+                        service_id="aoai_chat",
+                        max_tokens=150,
+                        temperature=0.7,
+                        top_p=1,
+                        frequency_penalty=0.5,
+                        presence_penalty=0.5,
+                    )
+                
+                chat = [
+                        {
+                            "role": "system",
+                            "content": "You are an AI assistant that helps people find information. " \
+                                "return your response in JSON format. with a text property. and assign the value in the text property " \
+                                "when streaming your response back, make sure you always send backa  well formed json object. with the text property set with the streamed characters."
+                        },
+                        {
+                            "role": "user",
+                            "content": "What is the purpose of a rubber duck?"
+                        }]
+                                    
+                answer = kernel_svc.chat_service.complete_chat_stream(messages=chat, settings=az_oai_chat_prompt_execution_settings)
                 async for message in answer:
-                    print(str(message[0]))
+                    #logger_svc.logger.info(f"Sending message: {json.dumps(message)}")
                     await websocket.send(str(message[0]))
             except Exception as e:
                 print(e)
