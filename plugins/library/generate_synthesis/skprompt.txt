@@ -1,10 +1,8 @@
 [INSTRUCTION]
-1. Initialize a JSON object with the structure: { "synthesis": { "summary": "" } }
-2. Extract the 'captions' and 'answers' property from each record in the provided data (refer to the DATA_STRUCTURE section for the JSON structure).
-3. Concatenate all the 'captions' and 'answers' values into a single text, separating them with a period.
-4. Summarize this concatenated text. Ensure the summarized text injectes HTML paragraph marks where appropriate to denote paragraphs. using standard element tags i.e. <p> and </p>.
-5. Store the summarized text in the 'summary' property of the 'synthesis' JSON object created in step 1.
-6. Ensure the output is a well-formed JSON object based on the object definition in Step 1, and return it.
+1. Extract the 'captions' and 'answers' property from each record in the provided data (refer to the DATA_STRUCTURE section for the JSON structure).
+2. Concatenate all the 'captions' and 'answers' values into a single text, separating them with a period.
+3. Summarize this concatenated text. Ensure the summarized text injectes HTML paragraph marks where appropriate to denote paragraphs. using standard element tags i.e. <p> and </p>.
+4. Return the summarized text.
 
 [INSTRUCTION]
 

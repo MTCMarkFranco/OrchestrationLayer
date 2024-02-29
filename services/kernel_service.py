@@ -42,7 +42,7 @@ class kernel_service:
         self.kernel = sk.Kernel()
         
         deployment, api_key, endpoint  = sk.azure_openai_settings_from_dot_env()
-        self.kernel.add_chat_service("gpt", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/"))    
+        self.azure_chat: AzureChatCompletion = self.kernel.add_chat_service("gpt", AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/"))    
         #self.kernel.add_text_completion_service("dv", AzureTextCompletion(deployment_name="text-embedding-ada-002", api_key=api_key, endpoint=endpoint))
         #self.kernel.add_text_embedding_generation_service("ada",AzureTextEmbedding(deployment_name="text-embedding-ada-002", endpoint=endpoint,api_key=api_key))
         self.chat_service = AzureChatCompletion(deployment_name=deployment, api_key=api_key, base_url=f"{endpoint}openai/")    

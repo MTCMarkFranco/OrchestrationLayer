@@ -1,4 +1,5 @@
 # Package Imports
+from openai import NoneType
 import websockets
 from geventwebsocket.handler import WebSocketHandler
 from dotenv import dotenv_values
@@ -28,13 +29,12 @@ logger_svc= logger_proxy.get_logger_service()
 # Initialize configuration via .env file
 config = dotenv_values(".env")
 
-async def generateSynthesis(records):
+def generateSynthesis(records):
     global kernel_svc
     global logger_svc
 
     # Get the response stream from the last step in the plan
-    yield kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
-    await asyncio.sleep(1)
+    return kernel_svc.semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(records))
 
 async def processQuery(query):
        
@@ -58,38 +58,19 @@ async def chat(websocket, path):
         
         if(payload_string is not None and payload_string['generate_synthesis'] == True):
             try:
-                #answer = generateSynthesis(payload_string['records'])
-                #answer = kernel_svc.chat_service.complete_chat_stream( semantic_plugins["generate_synthesis"].invoke_stream(input=json.dumps(payload_string['records']))
-                az_oai_chat_prompt_execution_settings = AzureChatPromptExecutionSettings(
-                        service_id="aoai_chat",
-                        max_tokens=150,
-                        temperature=0.7,
-                        top_p=1,
-                        frequency_penalty=0.5,
-                        presence_penalty=0.5,
-                    )
-                
-                chat = [
-                        {
-                            "role": "system",
-                            "content": "You are an AI assistant that helps people find information. " \
-                                "return your response in JSON format. with a text property. and assign the value in the text property " \
-                                "when streaming your response back, make sure you always send backa  well formed json object. with the text property set with the streamed characters."
-                        },
-                        {
-                            "role": "user",
-                            "content": "What is the purpose of a rubber duck?"
-                        }]
-                                    
-                answer = kernel_svc.chat_service.complete_chat_stream(messages=chat, settings=az_oai_chat_prompt_execution_settings)
-                async for message in answer:
-                    #logger_svc.logger.info(f"Sending message: {json.dumps(message)}")
-                    await websocket.send(str(message[0]))
+                # make sure you implement this change on semantic-kernel==0.5.1.dev0
+                # If new release is out, take it and forget this change ^^^
+                synthesis = generateSynthesis(payload_string['records'])
+                async for chunk in synthesis:
+                    if not chunk[0].text is None:
+                        decoded_string = str(chunk[0].text)
+                        logger_svc.logger.info("chunk: " + decoded_string)  
+                        await websocket.send(decoded_string)
             except Exception as e:
-                print(e)
-                await websocket.send({'error': 'Error Getting results from Index'})    
+                logger_svc.logger.info({e})    
+                await websocket.send({e})    
         else:
-            query = message['messages'][0]['text']
+            query = payload_string['messages'][0]['text']
             output = await processQuery(query)
             if output is None:
                 await websocket.send('error', {'error': 'Error Getting results from Index'})
