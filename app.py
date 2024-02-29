@@ -58,7 +58,8 @@ async def chat(websocket, path):
         
         if(payload_string is not None and payload_string['generate_synthesis'] == True):
             try:
-                # make sure you implement this change on semantic-kernel==0.5.1.dev0
+                # make sure you implement the change below on semantic-kernel==0.5.1.dev0
+                # https://github.com/microsoft/semantic-kernel/issues/5114
                 # If new release is out, take it and forget this change ^^^
                 synthesis = generateSynthesis(payload_string['records'])
                 async for chunk in synthesis:
