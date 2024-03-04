@@ -56,7 +56,7 @@ async def chat(websocket, path):
     async for payload in websocket:
         payload_string = json.loads(payload)
         
-        if(payload_string is not None and payload_string['generate_synthesis'] == True):
+        if(payload_string is not None and 'generate_synthesis' in payload_string):
             try:
                 # make sure you implement the change below on semantic-kernel==0.5.1.dev0
                 # https://github.com/microsoft/semantic-kernel/issues/5114
@@ -66,7 +66,8 @@ async def chat(websocket, path):
                     if not chunk[0].text is None:
                         decoded_string = str(chunk[0].text)
                         logger_svc.logger.info("chunk: " + decoded_string)  
-                        await websocket.send(decoded_string)
+                        jsonobj = { "text": decoded_string }
+                        await websocket.send(json.dumps(jsonobj))
             except Exception as e:
                 logger_svc.logger.info({e})    
                 await websocket.send({e})    
