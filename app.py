@@ -68,9 +68,11 @@ async def chat(websocket, path):
                         logger_svc.logger.info("chunk: " + decoded_string)  
                         jsonobj = { "text": decoded_string }
                         await websocket.send(json.dumps(jsonobj))
+                        await websocket.send(json.dumps({"text": "stop-key"}))
             except Exception as e:
                 logger_svc.logger.info({e})    
-                await websocket.send({e})    
+                await websocket.send({e})
+                await websocket.send(json.dumps({"text": "stop-key"}))    
         else:
             query = payload_string['messages'][0]['text']
             output = await processQuery(query)
@@ -78,6 +80,7 @@ async def chat(websocket, path):
                 await websocket.send('error', {'error': 'Error Getting results from Index'})
             else:
                 await websocket.send(output)
+                await websocket.send(json.dumps({"text": "stop-key"}))
 
 # Initialize the webserver
 logger_svc.logger.info("Starting webSockets on port 5000...")  
