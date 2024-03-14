@@ -76,9 +76,11 @@ class QueryIndexPlugin:
                                          query_caption="extractive",
                                          query_caption_highlight=True,
                                          query_answer="extractive",
-                                         search_mode="all",
+                                         search_mode="any",
                                          query_type="semantic",
                                          query_answer_count=3,
+                                         query_speller="lexicon",
+                                         query_language="en",
                                          semantic_configuration_name=self.semntic_config)
            
  
