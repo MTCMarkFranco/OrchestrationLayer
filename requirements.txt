@@ -1,7 +1,7 @@
 flask-rest
 Flask-Session
 azure-functions
-python-dotenv==1.0.0
+python-dotenv==1.2.2
 semantic-kernel==0.5.1.dev0
 azure-core
 azure.search.documents===11.4.0b6
